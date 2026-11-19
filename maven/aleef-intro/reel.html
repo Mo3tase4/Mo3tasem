@@ -11,6 +11,7 @@
 <body>
 <script>
 const SCRIPT = [
+  "إنت من عزون أو القرى اللي حواليها؟",
   "بقلب عزون، مركز أليف البيطري",
   "عيادة ومتجر بمكان واحد",
   "بتجيب قطتك أو كلبك",
@@ -33,7 +34,7 @@ const END = TM.end + 2.0;
 const GREEN = "#065841", GOLD = "#E6C068", GOLD2 = "#B8902F";
 const reel = R.reel({ w: 1080, h: 1920, fps: 30, lang: "ar", duration: END, bg: "#1d2a25" });
 const G = 1700;
-const cam = R.world(reel, 12400, 3400);
+const cam = R.world(reel, 14400, 3400);
 const world = cam.el;
 const C = R.clay;
 
@@ -108,8 +109,42 @@ const henSvg = (c) => `<g filter="url(#soft)">
   <path d="M72 26 l10 4 -10 4z" fill="#f2b33d"/><ellipse cx="66" cy="38" rx="4" ry="6" fill="#e0453a"/>
   <circle cx="63" cy="23" r="3" fill="#2b1d14"/></g>`;
 
+/* =========== 0) الهوك: عزون والقرى اللي حواليها =========== */
+const XH = 12900, HC = XH + 600;
+R.sky(reel, world, { x: XH - 300, w: 1900, h: G, top: "#8cc6ec", bottom: "#f3f0e2" });
+R.svg(world, 1900, 520, `<path d="M0 520 Q300 180 640 330 Q980 120 1320 300 Q1620 170 1900 290 V520z" fill="#b9d98f"/><path d="M0 520 Q420 300 900 420 Q1400 290 1900 400 V520z" fill="#a3cf7c"/>`, { x: XH - 300, y: G - 520 });
+R.svg(world, 1900, 1700, `<rect width="1900" height="1700" fill="${C("#93c66d")}"/>${Array.from({ length: 30 }, (_, i) => `<circle cx="${(i * 173) % 1900}" cy="${80 + (i * 97) % 700}" r="${10 + i % 3 * 4}" fill="#5f9e47" opacity=".5"/>`).join("")}`, { x: XH - 300, y: G });
+// بيت حجر بسطح وخزان مي
+const house = (w, h, c, tank = true) => `<g filter="url(#soft)">${tank ? `<rect x="${w * .58}" y="0" width="${w * .26}" height="24" rx="7" fill="#2b2f33"/>` : ""}<rect x="0" y="20" width="${w}" height="${h}" rx="8" fill="${C(c)}"/><rect x="-4" y="16" width="${w + 8}" height="10" rx="4" fill="${C("#e9e1cf")}"/>
+  <rect x="${w * .14}" y="${20 + h * .25}" width="${w * .24}" height="${h * .3}" rx="5" fill="#8fc3dd"/><rect x="${w * .56}" y="${20 + h * .25}" width="${w * .24}" height="${h * .3}" rx="5" fill="#8fc3dd"/><rect x="${w * .4}" y="${20 + h * .6}" width="${w * .2}" height="${h * .4}" rx="5" fill="${C("#7b5a3c")}"/></g>`;
+const village = (cx, gy, s, t0, n = 6) => {
+  const spots = [[-1.5, 0, 150, 120], [-.5, 14, 170, 150], [.6, 4, 150, 130], [1.6, 18, 130, 110], [-1, 60, 140, 100], [1.1, 64, 150, 105], [0, 70, 120, 95]];
+  const cols = ["#f4ecd8", "#efe2c4", "#f7f1e3", "#eadbbd"];
+  spots.slice(0, n).forEach(([dx, dy, w, h], i) => {
+    const el = R.svg(world, w * s + 10, (h + 26) * s, `<g transform="scale(${s})">${house(w, h, cols[i % 4], i % 3 !== 2)}</g>`, { x: cx + dx * 150 * s - w * s / 2, y: gy - (h + 26) * s + dy * s });
+    R.popIn(reel, el, t0 + i * .06, { sound: i === 0, note: "houses" });
+  });
+};
+// عزون بالنص مع مئذنة
+const minaret = R.svg(world, 90, 440, `<g filter="url(#soft)"><rect x="28" y="70" width="34" height="370" rx="8" fill="${C("#f2ead6")}"/><rect x="18" y="150" width="54" height="16" rx="6" fill="${C("#e0d4b6")}"/><path d="M45 0 L68 70 H22z" fill="${C(GREEN)}"/><circle cx="45" cy="0" r="6" fill="${GOLD}"/></g>`, { x: HC + 300, y: G - 420 });
+R.popIn(reel, minaret, -1, { sound: false });
+village(HC, G + 10, 1, -1, 7);
+const pin = R.svg(world, 180, 240, `<g filter="url(#soft)"><path d="M90 232 C90 232 12 132 12 82 a78 78 0 0 1 156 0 C168 132 90 232 90 232z" fill="${C(GREEN)}"/><circle cx="90" cy="82" r="48" fill="#fff"/>
+  <g transform="translate(62 54) scale(2.4)" fill="${GREEN}"><circle cx="5" cy="7" r="2.2"/><circle cx="10" cy="3.5" r="2.2"/><circle cx="15" cy="3.5" r="2.2"/><circle cx="19.5" cy="7" r="2.2"/><path d="M12 9c-3 0-6 4-5 6 1 2 3 1 5 1s4 1 5-1c1-2-2-6-5-6z"/></g></g>`, { x: HC - 90, y: G - 520 });
+R.drop(reel, pin, W(0, 2) - .1, { height: 520, note: "pin" });
+cam.punch(W(0, 2) + .3, .06);
+// القرى اللي حواليها (أبعد وأصغر، على التلال)
+const around = [[XH - 120, G - 300], [XH + 1320, G - 280], [XH + 80, G - 420], [XH + 1120, G - 410]];
+around.forEach(([x, y], i) => {
+  village(x, y, .42, W(0, 4) + i * .12, 4);
+  const sp = R.svg(world, 70, 94, `<g transform="scale(.39)" filter="url(#soft)"><path d="M90 232 C90 232 12 132 12 82 a78 78 0 0 1 156 0 C168 132 90 232 90 232z" fill="${C(GOLD)}"/><circle cx="90" cy="82" r="40" fill="#fff"/></g>`, { x: x - 35, y: y - 150 });
+  R.drop(reel, sp, W(0, 5) + i * .1, { height: 160, note: i ? undefined : "pins" });
+});
+const ring = R.box(world, HC - 700, G - 950, 1400, 1400, { borderRadius: "50%", border: `10px dashed ${GOLD}`, boxSizing: "border-box" });
+R.popIn(reel, ring, W(0, 6), { origin: "50% 50%", out: T[1], note: "ring" });
+
 /* =========== 1) الشارع ومبنى المركز =========== */
-R.sky(reel, world, { w: 3200, h: G, night: [[0, 0], [T[10] - .1, 0], [T[10] + .7, .9, "inOut"], [T[12] - .2, .9], [T[12] + .6, 0, "inOut"]] });
+R.sky(reel, world, { w: 3200, h: G, night: [[0, 0], [T[11] - .1, 0], [T[11] + .7, .9, "inOut"], [T[13] - .2, .9], [T[13] + .6, 0, "inOut"]] });
 R.skyline(world, 0, G - 40, 3200, { color: "#cfe0d8" });
 R.street(world, 0, G, 3200, { h: 1700 });
 for (const x of [150, 1700, 2600]) R.palm(world, x, G + 4, 1.25);
@@ -117,38 +152,38 @@ for (const x of [330, 1500, 2300]) R.bush(world, x, G + 6, 1.1, "#3f9a5c");
 
 const SX = 900;
 const shop = R.shop(world, SX, G, { w: 760, h: 620, sign: "مركز أليف", color: GREEN, wall: "#f4efe2", awning: GOLD });
-R.drop(reel, shop.parts.wall, W(0, 0), { height: 240 });
-R.drop(reel, shop.parts.window, W(0, 1) - .12);
-R.drop(reel, shop.parts.door, W(0, 1) + .06);
-R.drop(reel, shop.parts.awning, W(0, 2) - .05, { height: 130 });
-R.drop(reel, shop.parts.sign, W(0, 3), { height: 280 });
+R.drop(reel, shop.parts.wall, W(1, 0), { height: 240 });
+R.drop(reel, shop.parts.window, W(1, 1) - .12);
+R.drop(reel, shop.parts.door, W(1, 1) + .06);
+R.drop(reel, shop.parts.awning, W(1, 2) - .05, { height: 130 });
+R.drop(reel, shop.parts.sign, W(1, 3), { height: 280 });
 // صليب بيطري أخضر على الحيط
 const plus = R.svg(shop.root, 110, 110, `<g filter="url(#soft)"><circle cx="55" cy="55" r="50" fill="#fff"/><path d="M42 20h26v22h22v26H68v22H42V68H20V42h22z" fill="${C(GREEN)}"/></g>`, { x: 600, y: 300 });
-R.popIn(reel, plus, W(0, 4), { origin: "50% 50%", note: "cross" });
+R.popIn(reel, plus, W(1, 4), { origin: "50% 50%", note: "cross" });
 // ضوء الشباك بالليل
 const glow = R.box(shop.root, 40, 170, 360, 300, { background: "radial-gradient(closest-side, rgba(255,214,120,.85), rgba(255,214,120,0))", mixBlendMode: "screen" });
-reel.on(t => { glow.style.opacity = R.k(t, [[0, 0], [T[10] + .3, 0], [T[10] + .9, 1], [T[12] - .2, 1], [T[12] + .5, 0]]); });
+reel.on(t => { glow.style.opacity = R.k(t, [[0, 0], [T[11] + .3, 0], [T[11] + .9, 1], [T[13] - .2, 1], [T[13] + .5, 0]]); });
 
 // عيادة + متجر
-bubble(SX - 210, G - 820, "heart", GREEN, W(1, 0), T[2] - .1);
-bubble(SX + 210, G - 820, "bag", GOLD2, W(1, 1), T[2] - .1);
+bubble(SX - 210, G - 820, "heart", GREEN, W(2, 0), T[3] - .1);
+bubble(SX + 210, G - 820, "bag", GOLD2, W(2, 1), T[3] - .1);
 const join = R.svg(world, 140, 140, `<g filter="url(#soft)"><circle cx="70" cy="70" r="62" fill="${C(GOLD)}"/><path d="M42 70 l18 18 36 -38" stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`, { x: SX - 70, y: G - 890 });
-R.popIn(reel, join, W(1, 3), { origin: "50% 50%", out: T[2] - .1, note: "together" });
-cam.punch(W(1, 3), .05);
+R.popIn(reel, join, W(2, 3), { origin: "50% 50%", out: T[3] - .1, note: "together" });
+cam.punch(W(2, 3), .05);
 
 // صاحب القطة والكلب
 const owner = R.person(reel, world, 1950, G + 12, { shirt: "#3c78d8", skin: R.SKIN[1], hair: "#3a2618", s: 1.05 });
-owner.face(-1).show(T[2] - .25, T[3]).move(T[2] - .2, W(2, 3) + .35, -720);
+owner.face(-1).show(T[3] - .25, T[4]).move(T[3] - .2, W(3, 3) + .35, -720);
 const heldCat = R.svg(owner.root, 120, 300, `<g transform="translate(18 112) scale(.62)">${catSvg()}</g>`);
-R.popIn(reel, heldCat, W(2, 1), { origin: "50% 80%", note: "cat" });
+R.popIn(reel, heldCat, W(3, 1), { origin: "50% 80%", note: "cat" });
 const dogWrap = R.box(world, 2080, G - 130, 200, 145);
 const dogIn = R.svg(dogWrap, 200, 145, `<g transform="translate(200 0) scale(-1 1)">${dogSvg()}</g>`);
-R.popIn(reel, dogIn, W(2, 3), { origin: "50% 100%", note: "dog" });
+R.popIn(reel, dogIn, W(3, 3), { origin: "50% 100%", note: "dog" });
 reel.on(t => {
-  const dx = R.k(t, [[0, 0], [T[2] - .2, 0], [W(2, 3) + .35, -720, "linear"]]);
-  const walking = t > T[2] - .2 && t < W(2, 3) + .35;
+  const dx = R.k(t, [[0, 0], [T[3] - .2, 0], [W(3, 3) + .35, -720, "linear"]]);
+  const walking = t > T[3] - .2 && t < W(3, 3) + .35;
   dogWrap.style.transform = `translate(${dx}px, ${walking ? -Math.abs(Math.sin(t * 13)) * 8 : 0}px)`;
-  dogWrap.style.visibility = t > T[3] ? "hidden" : "inherit";
+  dogWrap.style.visibility = t > T[4] ? "hidden" : "inherit";
 });
 
 /* =========== 2) غرفة الفحص =========== */
@@ -161,15 +196,15 @@ R.svg(world, 300, 520, `<g filter="url(#soft)"><rect width="300" height="520" rx
 // طاولة الفحص
 R.svg(world, 520, 260, `<g filter="url(#soft)"><rect x="0" y="0" width="520" height="44" rx="18" fill="${C("#b8c4cc")}"/><rect x="230" y="40" width="60" height="180" rx="12" fill="${C("#8f9ca6")}"/><rect x="150" y="214" width="220" height="30" rx="14" fill="${C("#76838d")}"/></g>`, { x: X1 - 250, y: G - 270 });
 const tableCat = R.svg(world, 150, 140, `<g transform="scale(1.2)">${catSvg()}</g>`, { x: X1 - 60, y: G - 405 });
-R.popIn(reel, tableCat, T[3] - .01, { sound: false });
+R.popIn(reel, tableCat, T[4] - .01, { sound: false });
 const vet = R.person(reel, world, X1 - 320, G + 14, { shirt: "#f8fbfa", pants: GREEN, skin: R.SKIN[1], hair: "#2b1d14", s: 1.12 });
-vet.show(T[3] - .01, T[6]);
+vet.show(T[4] - .01, T[7]);
 R.svg(vet.root, 120, 300, `<path d="M44 122 Q46 162 60 164 Q74 162 76 122" stroke="#2f4858" stroke-width="4" fill="none"/><circle cx="60" cy="170" r="7" fill="#b0bec5" stroke="#2f4858" stroke-width="3"/><rect x="66" y="140" width="22" height="10" rx="3" fill="${GREEN}"/>`);
-vet.waveAt(W(3, 0) + .05, .6);
-bubble(X1 - 160, G - 700, "check", GREEN, W(3, 0), T[6] - .05);
-bubble(X1 + 40, G - 790, "syringe", GOLD2, W(3, 1), T[6] - .05);
-bubble(X1 + 240, G - 700, "heart", "#e05a6a", W(3, 2), T[6] - .05);
-cam.punch(W(3, 2), .05);
+vet.waveAt(W(4, 0) + .05, .6);
+bubble(X1 - 160, G - 700, "check", GREEN, W(4, 0), T[7] - .05);
+bubble(X1 + 40, G - 790, "syringe", GOLD2, W(4, 1), T[7] - .05);
+bubble(X1 + 240, G - 700, "heart", "#e05a6a", W(4, 2), T[7] - .05);
+cam.punch(W(4, 2), .05);
 
 /* =========== 2ب) الحمّام والحلاقة + المبيت العلاجي والعمليات =========== */
 const XG = 9700;
@@ -177,7 +212,7 @@ R.room(world, XG, G - 1800, 2400, 2400, { wall: "#eaf4f6", floor: "#d6dde0" });
 // دوش على الحيط
 R.svg(world, 260, 360, `<g filter="url(#soft)"><path d="M230 0 V60 Q230 90 200 90 H120" stroke="#9fb3bd" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M70 80 h100 l-14 40 h-72z" fill="${C("#b8c4cc")}"/></g>`, { x: XG + 300, y: G - 760 });
 const drops = R.svg(world, 200, 280, `<g fill="#7cc6e8">${Array.from({ length: 14 }, (_, i) => `<ellipse cx="${30 + (i * 37) % 140}" cy="${20 + (i * 53) % 240}" rx="5" ry="12"/>`).join("")}</g>`, { x: XG + 360, y: G - 630 });
-R.popIn(reel, drops, W(4, 1) - .1, { origin: "50% 0%", out: T[5] - .05, sound: false });
+R.popIn(reel, drops, W(5, 1) - .1, { origin: "50% 0%", out: T[6] - .05, sound: false });
 reel.on(t => { drops.style.translate = `0 ${((t * 160) % 40)}px`; });
 // كلب بالبانيو
 const bathDog = R.svg(world, 230, 170, `<g transform="scale(1.15)">${dogSvg("#e0b072")}</g>`, { x: XG + 250, y: G - 395 });
@@ -185,48 +220,48 @@ R.svg(world, 460, 240, `<g filter="url(#soft)"><rect x="70" y="190" width="34" h
 for (let i = 0; i < 9; i++) {
   const r = 26 + (i * 7) % 22;
   const f = R.svg(world, r * 2 + 8, r * 2 + 8, `<circle cx="${r + 4}" cy="${r + 4}" r="${r}" fill="#ffffff" stroke="#bfe3f2" stroke-width="4" opacity=".95"/><circle cx="${r * .7}" cy="${r * .7}" r="${r * .22}" fill="#fff"/>`, { x: XG + 120 + i * 50, y: G - 230 - (i % 3) * 22 });
-  R.popIn(reel, f, W(4, 1) + i * .05, { origin: "50% 50%", out: T[5] - .05, sound: i % 3 === 0, note: "foam" });
+  R.popIn(reel, f, W(5, 1) + i * .05, { origin: "50% 50%", out: T[6] - .05, sound: i % 3 === 0, note: "foam" });
 }
 const groomer = R.person(reel, world, XG + 700, G + 14, { shirt: GREEN, apron: GOLD, skin: R.SKIN[1], hair: "#2b1d14", s: 1.1 });
-groomer.face(-1).show(T[4] - .01, T[5]);
-groomer.waveAt(W(4, 2), .7);
-bubble(XG + 820, G - 720, "scissors", GOLD2, W(4, 2), T[5] - .05);
+groomer.face(-1).show(T[5] - .01, T[6]);
+groomer.waveAt(W(5, 2), .7);
+bubble(XG + 820, G - 720, "scissors", GOLD2, W(5, 2), T[6] - .05);
 for (let i = 0; i < 4; i++) {
   const sp = R.svg(world, 70, 70, `<g transform="scale(2.6)"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="${GOLD}"/></g>`, { x: XG + 200 + i * 110, y: G - 520 - (i % 2) * 70 });
-  R.popIn(reel, sp, W(4, 3) + i * .07, { origin: "50% 50%", out: T[5] - .05, sound: i === 0, note: "sparkle" });
+  R.popIn(reel, sp, W(5, 3) + i * .07, { origin: "50% 50%", out: T[6] - .05, sound: i === 0, note: "sparkle" });
 }
 // المبيت العلاجي: بيت مريح + سيروم
 const KX = XG + 1000;
 const kennel = R.svg(world, 400, 340, `<g filter="url(#soft)"><rect width="400" height="340" rx="30" fill="${C("#f2e6cf")}"/><rect x="24" y="24" width="352" height="292" rx="20" fill="#fff8ec"/>
   <ellipse cx="200" cy="270" rx="150" ry="40" fill="${C("#7fb8a4")}"/></g>`, { x: KX - 200, y: G - 340 });
-R.drop(reel, kennel, T[5] - .05, { height: 120, note: "kennel" });
+R.drop(reel, kennel, T[6] - .05, { height: 120, note: "kennel" });
 const sleepCat = R.svg(world, 200, 110, `<g filter="url(#soft)"><path d="M150 80 q40 -6 30 -40" stroke="#f0a043" stroke-width="12" fill="none" stroke-linecap="round"/><ellipse cx="100" cy="74" rx="70" ry="34" fill="${C("#f0a043")}"/><circle cx="46" cy="62" r="30" fill="${C("#f0a043")}"/><path d="M26 40 l2 -22 l16 14z M62 36 l6 -20 l10 18z" fill="#f0a043"/><path d="M34 62 q6 5 12 0 M52 62 q6 5 12 0" stroke="#2b1d14" stroke-width="3.5" fill="none" stroke-linecap="round"/><rect x="88" y="56" width="40" height="12" rx="5" fill="${GREEN}"/></g>`, { x: KX - 100, y: G - 180 });
-R.popIn(reel, sleepCat, T[5] + .05, { sound: false });
+R.popIn(reel, sleepCat, T[6] + .05, { sound: false });
 const iv = R.svg(world, 140, 520, `<g filter="url(#soft)"><rect x="64" y="40" width="10" height="460" rx="5" fill="#9fb3bd"/><path d="M30 40 h80" stroke="#9fb3bd" stroke-width="10" stroke-linecap="round"/><rect x="80" y="54" width="52" height="84" rx="16" fill="#e6f6fb" stroke="#9fd0e6" stroke-width="4"/><rect x="86" y="96" width="40" height="36" rx="10" fill="#bfe3f2"/>
   <path d="M106 138 V170 Q106 260 40 330" stroke="#bfe3f2" stroke-width="5" fill="none"/><ellipse cx="69" cy="504" rx="44" ry="10" fill="#9fb3bd"/></g>`, { x: KX + 170, y: G - 510 });
-R.popIn(reel, iv, W(5, 1), { note: "iv" });
+R.popIn(reel, iv, W(6, 1), { note: "iv" });
 const zz = R.box(world, KX - 160, G - 300, 120, 80, { font: "54px Lalezar", color: "#7fb8a4" });
 zz.textContent = "z z";
-R.popIn(reel, zz, W(5, 0) + .1, { origin: "50% 50%", out: T[6] - .05, sound: false });
-bubble(KX - 10, G - 640, "bed", GREEN, W(5, 0), W(5, 2) - .1);
+R.popIn(reel, zz, W(6, 0) + .1, { origin: "50% 50%", out: T[7] - .05, sound: false });
+bubble(KX - 10, G - 640, "bed", GREEN, W(6, 0), W(6, 2) - .1);
 // العمليات: إضاءة غرفة عمليات + جهاز مراقبة (بدون دم)
 const OX = XG + 1560;
 const lamp = R.svg(world, 360, 420, `<g filter="url(#soft)"><rect x="170" y="0" width="20" height="230" fill="#9fb3bd"/><ellipse cx="180" cy="250" rx="150" ry="46" fill="${C("#dfe7ea")}"/><ellipse cx="180" cy="262" rx="120" ry="28" fill="#fffbe0"/></g>`, { x: OX - 180, y: G - 1010 });
-R.popIn(reel, lamp, W(5, 2) - .05, { origin: "50% 0%", note: "lamp" });
+R.popIn(reel, lamp, W(6, 2) - .05, { origin: "50% 0%", note: "lamp" });
 const beam = R.box(world, OX - 200, G - 760, 400, 520, { background: "linear-gradient(rgba(255,250,210,.55), rgba(255,250,210,0))", clipPath: "polygon(25% 0, 75% 0, 100% 100%, 0 100%)" });
-reel.on(t => { beam.style.opacity = R.k(t, [[0, 0], [W(5, 2) + .1, 0], [W(5, 2) + .4, 1]]); });
+reel.on(t => { beam.style.opacity = R.k(t, [[0, 0], [W(6, 2) + .1, 0], [W(6, 2) + .4, 1]]); });
 R.svg(world, 480, 260, `<g filter="url(#soft)"><rect x="0" y="0" width="480" height="40" rx="16" fill="${C("#b8c4cc")}"/><rect x="210" y="36" width="60" height="180" rx="12" fill="${C("#8f9ca6")}"/><rect x="140" y="210" width="200" height="30" rx="14" fill="${C("#76838d")}"/></g>`, { x: OX - 240, y: G - 260 });
 R.svg(world, 340, 120, `<g filter="url(#soft)"><path d="M20 110 Q40 30 170 40 Q300 30 320 110z" fill="${C("#2f8f83")}"/><circle cx="300" cy="62" r="34" fill="${C("#b9824f")}"/><circle cx="312" cy="56" r="4" fill="#2b1d14"/></g>`, { x: OX - 200, y: G - 370 });
 const surgeon = R.person(reel, world, OX - 330, G + 14, { shirt: "#2f8f83", pants: "#2f8f83", skin: R.SKIN[1], s: 1.1 });
-surgeon.show(W(5, 2) - .05, T[6]);
-R.popIn(reel, surgeon.body, W(5, 2) - .05, { sound: false });
+surgeon.show(W(6, 2) - .05, T[7]);
+R.popIn(reel, surgeon.body, W(6, 2) - .05, { sound: false });
 R.svg(surgeon.root, 120, 300, `<path d="M16 62 q44 -56 88 0 q-44 -14 -88 0z" fill="#2f8f83"/><rect x="34" y="80" width="52" height="30" rx="12" fill="#d7eef5"/>`);
 const mon = R.svg(world, 230, 420, `<g filter="url(#soft)"><rect x="104" y="170" width="16" height="230" rx="8" fill="#9fb3bd"/><ellipse cx="112" cy="404" rx="56" ry="12" fill="#9fb3bd"/><rect x="0" y="0" width="224" height="170" rx="22" fill="${C("#2b3a42")}"/><rect x="14" y="14" width="196" height="142" rx="12" fill="#10241d"/>
   <path id="ecg" d="M20 90 H70 L82 60 L96 120 L108 40 L120 90 H204" stroke="#4cc276" stroke-width="5" fill="none" stroke-linejoin="round" stroke-dasharray="320" stroke-dashoffset="320"/></g>`, { x: OX + 140, y: G - 400 });
-R.popIn(reel, mon, W(5, 3), { note: "monitor" });
+R.popIn(reel, mon, W(6, 3), { note: "monitor" });
 const ecg = mon.querySelector("#ecg");
-reel.on(t => { ecg.style.strokeDashoffset = 320 - ((Math.max(0, t - W(5, 3)) * 260) % 640); });
-reel.cue(W(5, 3) + .3, "tick", "beep");
+reel.on(t => { ecg.style.strokeDashoffset = 320 - ((Math.max(0, t - W(6, 3)) * 260) % 640); });
+reel.cue(W(6, 3) + .3, "tick", "beep");
 
 /* =========== 3) المتجر: الأكل والمستلزمات والأدوية =========== */
 const X2 = 5800;
@@ -239,7 +274,7 @@ const bagCols = [GREEN, GOLD, "#d9534f", "#5b6fc7", GREEN, "#e98a3a", GOLD];
 bagCols.forEach((c, i) => {
   const b = R.svg(world, 108, 200, `<g filter="url(#soft)"><path d="M8 18 h92 l-6 178 h-80z" fill="${C(c)}"/><rect x="6" y="6" width="96" height="22" rx="6" fill="${C(c)}"/><circle cx="54" cy="104" r="28" fill="#fff" opacity=".92"/>
     <g transform="translate(36 86) scale(1.5)" fill="${c}"><circle cx="5" cy="7" r="2.2"/><circle cx="10" cy="3.5" r="2.2"/><circle cx="15" cy="3.5" r="2.2"/><circle cx="19.5" cy="7" r="2.2"/><path d="M12 9c-3 0-6 4-5 6 1 2 3 1 5 1s4 1 5-1c1-2-2-6-5-6z"/></g></g>`, { x: X2 - 430 + i * 124, y: SH + 250 - 200 });
-  R.drop(reel, b, W(6, 1) + i * .07, { height: 120, note: i ? undefined : "food bags" });
+  R.drop(reel, b, W(7, 1) + i * .07, { height: 120, note: i ? undefined : "food bags" });
 });
 // رف 2: مستلزمات
 const sup = [
@@ -253,7 +288,7 @@ let sx = X2 - 420;
 sup.forEach((m, i) => {
   const n = R.svg(world, supW[i], 120, m, { x: sx, y: SH + 520 - 118 });
   sx += supW[i] + 50;
-  R.popIn(reel, n, W(6, 2) + i * .08, { sound: i === 0, note: "supplies" });
+  R.popIn(reel, n, W(7, 2) + i * .08, { sound: i === 0, note: "supplies" });
 });
 // رف 3: أدوية ومكملات
 for (let i = 0; i < 8; i++) {
@@ -262,12 +297,12 @@ for (let i = 0; i < 8; i++) {
     ? `<g filter="url(#soft)"><rect x="18" y="0" width="34" height="18" rx="5" fill="#f4f4f4"/><rect x="6" y="16" width="58" height="110" rx="16" fill="${C(i % 2 ? "#b5651d" : "#2f7d63")}"/><rect x="12" y="52" width="46" height="40" rx="8" fill="#fff"/><path d="M30 60h10v8h8v10h-8v8H30v-8h-8V68h8z" fill="${GREEN}"/></g>`
     : `<g filter="url(#soft)"><rect x="2" y="40" width="66" height="86" rx="10" fill="${C(GOLD)}"/><rect x="10" y="66" width="50" height="22" rx="6" fill="#fff"/></g>`;
   const n = R.svg(world, 70, 126, m, { x: X2 - 430 + i * 108, y: SH + 790 - 126 });
-  R.popIn(reel, n, W(7, 0) + i * .07, { sound: i % 3 === 0, note: "meds" });
+  R.popIn(reel, n, W(8, 0) + i * .07, { sound: i % 3 === 0, note: "meds" });
 }
 const clerk = R.person(reel, world, X2 + 560, G + 16, { shirt: GREEN, skin: R.SKIN[2], hair: "#1f140d", beard: true, s: 1.1 });
-clerk.face(-1).show(T[6] - .01, T[8]);
-clerk.waveAt(T[6] + .2, .8);
-bubble(X2 + 300, SH - 90, "cross", GREEN, W(7, 2), T[8] - .05, 120);
+clerk.face(-1).show(T[7] - .01, T[9]);
+clerk.waveAt(T[7] + .2, .8);
+bubble(X2 + 300, SH - 90, "cross", GREEN, W(8, 2), T[9] - .05, 120);
 
 /* =========== 4) المزرعة =========== */
 const X3 = 7900;
@@ -284,17 +319,17 @@ const sheepPos = [[7180, 30], [7380, 60], [7560, 24], [7300, 110], [7500, 120]];
 sheepPos.forEach(([x, dy], i) => {
   const s = R.svg(world, 170, 120, sheepSvg(), { x, y: G - 100 + dy });
   if (i % 2) s.style.transform = "scaleX(-1)";
-  R.drop(reel, s, W(8, 0) + .3 + i * .12, { height: 160, note: i ? undefined : "sheep" });
+  R.drop(reel, s, W(9, 0) + .3 + i * .12, { height: 160, note: i ? undefined : "sheep" });
 });
 const cow = R.svg(world, 270, 180, cowSvg(), { x: 7760, y: G - 150 });
-R.drop(reel, cow, W(8, 2), { height: 200, note: "cow" });
+R.drop(reel, cow, W(9, 2), { height: 200, note: "cow" });
 ["#f4efe2", "#c9773c", "#f4efe2", "#8a4b2a"].forEach((c, i) => {
   const h = R.svg(world, 90, 86, henSvg(c), { x: 7280 + i * 140, y: G + 160 + (i % 2) * 30 });
-  R.popIn(reel, h, W(8, 3) + i * .08, { sound: i === 0, note: "hens" });
+  R.popIn(reel, h, W(9, 3) + i * .08, { sound: i === 0, note: "hens" });
 });
 const farmer = R.person(reel, world, 8120, G + 40, { shirt: "#a3672f", skin: R.SKIN[2], hair: "#2b1d14", beard: true, s: 1.1 });
-farmer.face(-1).show(T[8] - .01, T[10]);
-farmer.waveAt(W(9, 0), 1.2);
+farmer.face(-1).show(T[9] - .01, T[11]);
+farmer.waveAt(W(10, 0), 1.2);
 
 // سيارة المركز
 const van = R.box(world, 6150, G - 200, 420, 230);
@@ -304,51 +339,54 @@ R.svg(van, 420, 230, `<g filter="url(#soft)"><path d="M20 60 q0 -40 40 -40 h220 
   <text x="235" y="176" text-anchor="middle" font-family="Lalezar" font-size="30" fill="#fff">مركز أليف</text>
   <circle cx="96" cy="196" r="30" fill="#2b2f33"/><circle cx="96" cy="196" r="12" fill="#cfd8d3"/><circle cx="330" cy="196" r="30" fill="#2b2f33"/><circle cx="330" cy="196" r="12" fill="#cfd8d3"/></g>`);
 reel.on(t => {
-  const x = R.k(t, [[0, 0], [T[9] - .1, 0], [W(9, 1) + .25, 680, "out"]]);
-  const bump = t > T[9] - .1 && t < W(9, 1) + .25 ? Math.sin(t * 30) * 2 : 0;
+  const x = R.k(t, [[0, 0], [T[10] - .1, 0], [W(10, 1) + .25, 680, "out"]]);
+  const bump = t > T[10] - .1 && t < W(10, 1) + .25 ? Math.sin(t * 30) * 2 : 0;
   van.style.transform = `translate(${x}px, ${bump}px)`;
 });
-reel.cue(T[9] - .1, "whoosh", "van");
+reel.cue(T[10] - .1, "whoosh", "van");
 const farmVet = R.person(reel, world, 7020, G + 30, { shirt: "#f8fbfa", pants: GREEN, skin: R.SKIN[1], hair: "#2b1d14", s: 1.08 });
-farmVet.show(W(9, 2), T[10]).move(W(9, 2) + .1, T[10], 160);
-R.popIn(reel, farmVet.body, W(9, 2), { sound: false });
-bubble(7260, G - 560, "check", GREEN, W(9, 2) + .1, T[10] - .05);
+farmVet.show(W(10, 2), T[11]).move(W(10, 2) + .1, T[11], 160);
+R.popIn(reel, farmVet.body, W(10, 2), { sound: false });
+bubble(7260, G - 560, "check", GREEN, W(10, 2) + .1, T[11] - .05);
 
 /* =========== 5) الليل والطوارئ: رجعة للشارع =========== */
 const moon = R.svg(world, 180, 180, `<g filter="url(#soft)"><circle cx="90" cy="90" r="70" fill="#fdf3c8"/><circle cx="122" cy="68" r="62" fill="#2a3b6b" opacity="0"/></g>`, { x: SX + 200, y: G - 1000 });
-R.popIn(reel, moon, W(10, 3), { origin: "50% 50%", out: T[12] - .1, note: "moon" });
+R.popIn(reel, moon, W(11, 3), { origin: "50% 50%", out: T[13] - .1, note: "moon" });
 const alarm = R.box(world, SX - 250, G - 900, 140, 140, { background: "#e0453a", borderRadius: "50%", display: "grid", placeItems: "center", boxShadow: "0 0 0 14px rgba(224,69,58,.25), 0 14px 30px rgba(0,0,0,.3)" });
 alarm.innerHTML = R.icon("bell", 76, "#fff", 2.6);
-R.popIn(reel, alarm, W(10, 2), { origin: "50% 50%", out: T[11] + .1, note: "alarm" });
-cam.punch(W(10, 2), .07);
+R.popIn(reel, alarm, W(11, 2), { origin: "50% 50%", out: T[12] + .1, note: "alarm" });
+cam.punch(W(11, 2), .07);
 const runner = R.person(reel, world, 1900, G + 12, { shirt: "#7d5bd6", skin: R.SKIN[0], hair: "#5a3a22", face: "wow", s: 1.05 });
-runner.face(-1).show(T[10] + .2, T[11] + .2).move(T[10] + .2, T[11] + .2, -700);
+runner.face(-1).show(T[11] + .2, T[12] + .2).move(T[11] + .2, T[12] + .2, -700);
 const runDog = R.svg(runner.root, 120, 300, `<g transform="translate(14 120) scale(.5)">${dogSvg("#e0b072")}</g>`);
 
 /* =========== الكاميرا =========== */
 cam.keys.length = 0;
-cam.to(0, SX, G - 460, .92)
-   .to(W(0, 3), SX, G - 450, 1.12, "soft")
-   .to(T[1], SX, G - 480, 1.05)
-   .to(T[2], SX + 120, G - 450, 1.05)
-   .to(T[3] - .001, SX + 420, G - 430, 1.12, "inOut")
-   .to(T[3], X1 - 60, G - 480, 1.16)                      // قطع: غرفة الفحص
-   .to(T[4] - .001, X1 - 20, G - 470, 1.26, "linear")
-   .to(T[4], XG + 480, G - 430, 1.14)                      // قطع: الحمّام والحلاقة
-   .to(T[5] - .1, XG + 520, G - 450, 1.2, "linear")
-   .to(T[5], XG + 1000, G - 450, 1.12, "inOut")            // المبيت العلاجي
-   .to(W(5, 2), XG + 1100, G - 450, 1.1, "inOut")
-   .to(T[6] - .001, XG + 1580, G - 470, 1.04, "inOut")      // العمليات
-   .to(T[6], X2, SH + 330, 1.15)                           // قطع: المتجر
-   .to(T[7] - .1, X2, SH + 400, 1.15, "inOut")
-   .to(T[8] - .001, X2, SH + 460, 1.18, "inOut")
-   .to(T[8], 7420, G - 330, 1.05)                          // قطع: المزرعة
-   .to(W(8, 2), 7780, G - 330, .95, "inOut")
-   .to(T[9], 7300, G - 330, 1.0, "inOut")
-   .to(T[10] - .001, 7150, G - 350, 1.06)
-   .to(T[10], SX + 250, G - 480, .95)                       // قطع: الشارع بالليل
-   .to(T[11], SX + 100, G - 500, 1.0, "inOut")
-   .to(T[12], SX, G - 480, .95)
+cam.to(0, HC, G - 330, 1.3)
+   .to(W(0, 3), HC, G - 360, 1.15, "inOut")
+   .to(T[1] - .001, HC, G - 480, .78, "inOut")
+   .to(T[1], SX, G - 460, .92)
+   .to(W(1, 3), SX, G - 450, 1.12, "soft")
+   .to(T[2], SX, G - 480, 1.05)
+   .to(T[3], SX + 120, G - 450, 1.05)
+   .to(T[4] - .001, SX + 420, G - 430, 1.12, "inOut")
+   .to(T[4], X1 - 60, G - 480, 1.16)                      // قطع: غرفة الفحص
+   .to(T[5] - .001, X1 - 20, G - 470, 1.26, "linear")
+   .to(T[5], XG + 480, G - 430, 1.14)                      // قطع: الحمّام والحلاقة
+   .to(T[6] - .1, XG + 520, G - 450, 1.2, "linear")
+   .to(T[6], XG + 1000, G - 450, 1.12, "inOut")            // المبيت العلاجي
+   .to(W(6, 2), XG + 1100, G - 450, 1.1, "inOut")
+   .to(T[7] - .001, XG + 1580, G - 470, 1.04, "inOut")      // العمليات
+   .to(T[7], X2, SH + 330, 1.15)                           // قطع: المتجر
+   .to(T[8] - .1, X2, SH + 400, 1.15, "inOut")
+   .to(T[9] - .001, X2, SH + 460, 1.18, "inOut")
+   .to(T[9], 7420, G - 330, 1.05)                          // قطع: المزرعة
+   .to(W(9, 2), 7780, G - 330, .95, "inOut")
+   .to(T[10], 7300, G - 330, 1.0, "inOut")
+   .to(T[11] - .001, 7150, G - 350, 1.06)
+   .to(T[11], SX + 250, G - 480, .95)                       // قطع: الشارع بالليل
+   .to(T[12], SX + 100, G - 500, 1.0, "inOut")
+   .to(T[13], SX, G - 480, .95)
    .to(END, SX, G - 450, .88, "soft");
 
 /* =========== الموبايل: اتصال طوارئ =========== */
@@ -367,25 +405,25 @@ ph.screen.insertAdjacentHTML("beforeend", `
 </div>`);
 const st = ph.screen.querySelector("#st"), ans = ph.screen.querySelector("#ans");
 reel.on(t => {
-  const up = R.pop(t, T[11] - .15, .55), down = R.ease.in(R.clamp((t - (T[12] - .3)) / .35));
+  const up = R.pop(t, T[12] - .15, .55), down = R.ease.in(R.clamp((t - (T[13] - .3)) / .35));
   ph.root.style.transform = `translateY(${(1 - up) * 900 + down * 1100}px) rotate(${(1 - up) * 6}deg)`;
-  ph.root.style.visibility = t < T[11] - .2 || t > T[12] + .1 ? "hidden" : "visible";
-  const on = t >= W(11, 2);
+  ph.root.style.visibility = t < T[12] - .2 || t > T[13] + .1 ? "hidden" : "visible";
+  const on = t >= W(12, 2);
   const lbl = on ? "متصل · الطبيب معك" : "جاري الاتصال…";
   if (st.textContent !== lbl) st.textContent = lbl;
   ans.style.transform = `scale(${on ? 1 : 1 + .12 * Math.abs(Math.sin(t * 8))})`;
 });
-reel.cue(T[11] + .2, "ring", "call");
-R.notify(reel, ph, W(11, 2), "طوارئ مركز أليف", "على مدار الساعة · 0569003976", { accent: GREEN, icon: "bell", until: T[12] - .4 });
+reel.cue(T[12] + .2, "ring", "call");
+R.notify(reel, ph, W(12, 2), "طوارئ مركز أليف", "على مدار الساعة · 0569003976", { accent: GREEN, icon: "bell", until: T[13] - .4 });
 
 /* =========== الدوك والكابشن وبطاقة النهاية =========== */
 R.dock(reel, [
-  { icon: "store", at: W(0, 0) }, { icon: "paw", at: W(2, 1) }, { icon: "syringe", at: W(3, 1) }, { icon: "scissors", at: W(4, 2) }, { icon: "bed", at: W(5, 0) }, { icon: "bag", at: W(6, 1) },
-  { icon: "pill", at: W(7, 0) }, { icon: "sheep", at: W(8, 1) }, { icon: "car", at: T[9] }, { icon: "moon", at: W(10, 3), color: "#e0453a" },
-  { icon: "phone", at: W(11, 2), color: "#4cc276" },
-], { from: W(0, 3), accent: GOLD });
-R.caption(reel, TM.words, { y: 400, size: 128, ends: TM.ends, hold: .5, emph: Object.fromEntries([[3, GOLD], [4, GOLD], [39, "#ff8a7a"], [47, GOLD]]) });
-const card = R.endcard(reel, W(12, 2), { name: "مركز أليف", tagline: "رعاية متكاملة لحياة صحية", color: GREEN, logo: `<img src="logo-white.png" style="height:96px">` });
+  { icon: "store", at: W(1, 0) }, { icon: "paw", at: W(3, 1) }, { icon: "syringe", at: W(4, 1) }, { icon: "scissors", at: W(5, 2) }, { icon: "bed", at: W(6, 0) }, { icon: "bag", at: W(7, 1) },
+  { icon: "pill", at: W(8, 0) }, { icon: "sheep", at: W(9, 1) }, { icon: "car", at: T[10] }, { icon: "moon", at: W(11, 3), color: "#e0453a" },
+  { icon: "phone", at: W(12, 2), color: "#4cc276" },
+], { from: W(1, 3), accent: GOLD });
+R.caption(reel, TM.words, { y: 400, size: 128, ends: TM.ends, hold: .5, emph: Object.fromEntries([[2, GOLD], [6, GOLD], [10, GOLD], [11, GOLD], [46, "#ff8a7a"], [54, GOLD]]) });
+const card = R.endcard(reel, W(13, 2), { name: "مركز أليف", tagline: "رعاية متكاملة لحياة صحية", color: GREEN, logo: `<img src="logo-white.png" style="height:96px">` });
 card.insertAdjacentHTML("beforeend", `<div style="direction:ltr;font:600 34px 'IBM Plex Sans Arabic';color:${GOLD2}">+970 569 003 976</div>`);
 </script>
 </body>
