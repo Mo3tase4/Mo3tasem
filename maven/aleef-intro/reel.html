@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>مركز أليف البيطري - فيديو تعريفي (ستايل founder-story)</title>
+<!-- ستايل Maven Reels (founder-story). كل المعلومات من clinic-database.md.
+     بدون تعليق صوتي: التوقيت 2.5 كلمة/ثانية. لما يجهز vo.mp3: python scripts/timestamps.py vo.mp3 words.json --lang ar -->
+<script src="file:///home/user/Mo3tasem/.claude/skills/maven-reels/kit/reel.js"></script>
+<script src="words.js" onerror="window.VOICE=null"></script>
+</head>
+<body>
+<script>
+const SCRIPT = [
+  "بقلب عزون، مركز أليف البيطري",
+  "عيادة ومتجر بمكان واحد",
+  "بتجيب قطتك أو كلبك",
+  "بنفحصه وبنطعّمه وبنعالجه",
+  "وبتلاقي أكله ومستلزماته",
+  "والأدوية والمكملات البيطرية",
+  "ولمربي الأغنام والأبقار والدواجن",
+  "بنزورك لحد مزرعتك",
+  "وإذا صار طارئ بنص الليل",
+  "اتصل فينا، إحنا جاهزين",
+  "مركز أليف، رعاية متكاملة لحياة صحية",
+];
+const TM = R.timing(SCRIPT, window.VOICE, { wps: 2.5, gap: .35 });
+const T = TM.lines;
+const W = (line, n) => TM.words[SCRIPT.slice(0, line).reduce((a, l) => a + l.split(/\s+/).length, 0) + n][1];
+const END = TM.end + 2.0;
+
+const GREEN = "#065841", GOLD = "#E6C068", GOLD2 = "#B8902F";
+const reel = R.reel({ w: 1080, h: 1920, fps: 30, lang: "ar", duration: END, bg: "#1d2a25" });
+const G = 1700;
+const cam = R.world(reel, 9200, 3400);
+const world = cam.el;
+const C = R.clay;
+
+/* أيقونات إضافية للدوك */
+Object.assign(R.icons, {
+  paw: '<circle cx="6.5" cy="9" r="2"/><circle cx="10" cy="5.5" r="2"/><circle cx="14" cy="5.5" r="2"/><circle cx="17.5" cy="9" r="2"/><path d="M12 11c-3 0-6 4.5-5 7 1 2 3.5 1 5 1s4 1 5-1c1-2.5-2-7-5-7z"/>',
+  bag: '<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  pill: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-35 12 12)"/><path d="M9.5 8.5l5 7"/>',
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  sheep: '<path d="M6 15c-2 0-3-1.5-2.5-3S5 9.5 6.5 10c.3-2 2.5-3 4-2 1-1.5 3.5-1.5 4.5 0 1.5-.5 3 .5 3 2"/><path d="M6 15h12v-3"/><ellipse cx="19.5" cy="11" rx="2" ry="2.6"/><path d="M8 15v4M15 15v4"/>',
+  syringe: '<path d="M17 3l4 4M19 5l-3 3M15 5l4 4-9 9-4-4z"/><path d="M6 14l-3 3 4 4 3-3M11 9l2 2M8.5 11.5l2 2"/>',
+  cross: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
+});
+
+/* فقاعة أيقونة بيضاء فوق المشهد */
+const bubble = (x, y, icon, color, t0, out, size = 130) => {
+  const b = R.box(world, x - size / 2, y - size / 2, size, size, {
+    background: "#fff", borderRadius: "50%", display: "grid", placeItems: "center",
+    boxShadow: "0 14px 30px rgba(0,0,0,.22)", border: `6px solid ${color}`, boxSizing: "border-box",
+  });
+  b.innerHTML = R.icon(icon, size * .55, color, 2.4);
+  R.popIn(reel, b, t0, { origin: "50% 50%", out, note: icon });
+  return b;
+};
+
+/* رسومات الحيوانات (لعب ناعمة) */
+const catSvg = (c = "#f0a043") => `<g filter="url(#soft)">
+  <path d="M86 104 q34 -6 26 -44" stroke="${c}" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path d="M28 112 q-8 -56 32 -62 q40 6 32 62z" fill="${C(c)}"/>
+  <path d="M36 30 l2 -24 l18 16z M84 30 l-2 -24 l-18 16z" fill="${C(c)}"/>
+  <circle cx="60" cy="42" r="27" fill="${C(c)}"/>
+  <ellipse cx="60" cy="54" rx="12" ry="8" fill="#fbe3c4"/>
+  <circle cx="50" cy="40" r="4" fill="#2b1d14"/><circle cx="70" cy="40" r="4" fill="#2b1d14"/>
+  <path d="M56 49 h8 l-4 4z" fill="#d9536a"/></g>`;
+const dogSvg = (c = "#b9824f") => `<g filter="url(#soft)">
+  <path d="M40 70 q-26 -8 -26 -36" stroke="${c}" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <rect x="48" y="96" width="16" height="42" rx="8" fill="${C(c)}"/><rect x="70" y="96" width="16" height="42" rx="8" fill="${C(c)}"/>
+  <rect x="108" y="96" width="16" height="42" rx="8" fill="${C(c)}"/><rect x="128" y="96" width="16" height="42" rx="8" fill="${C(c)}"/>
+  <rect x="38" y="58" width="112" height="56" rx="28" fill="${C(c)}"/>
+  <circle cx="148" cy="48" r="30" fill="${C(c)}"/>
+  <ellipse cx="170" cy="58" rx="18" ry="13" fill="#f3d9b8"/><circle cx="185" cy="53" r="6" fill="#2b1d14"/>
+  <circle cx="154" cy="40" r="4.5" fill="#2b1d14"/>
+  <path d="M130 26 q-18 10 -8 40 q12 -8 16 -34z" fill="#6e4a2b"/>
+  <rect x="122" y="72" width="40" height="9" rx="4" fill="${GOLD}"/></g>`;
+const sheepSvg = () => `<g filter="url(#soft)">
+  <rect x="40" y="74" width="12" height="40" rx="6" fill="#3d3a36"/><rect x="62" y="78" width="12" height="38" rx="6" fill="#3d3a36"/>
+  <rect x="98" y="78" width="12" height="38" rx="6" fill="#3d3a36"/><rect x="116" y="74" width="12" height="40" rx="6" fill="#3d3a36"/>
+  ${[[52, 58, 26], [80, 46, 28], [108, 56, 26], [64, 74, 24], [96, 76, 24], [124, 66, 20], [40, 72, 20]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C("#f6f2e8")}"/>`).join("")}
+  <ellipse cx="146" cy="50" rx="18" ry="24" fill="${C("#3d3a36")}"/>
+  <ellipse cx="130" cy="38" rx="12" ry="6" fill="#3d3a36"/>
+  <circle cx="152" cy="44" r="3.5" fill="#fff"/></g>`;
+const cowSvg = () => `<g filter="url(#soft)">
+  <rect x="40" y="110" width="20" height="62" rx="9" fill="#efe9df"/><rect x="70" y="112" width="20" height="60" rx="9" fill="#efe9df"/>
+  <rect x="150" y="112" width="20" height="60" rx="9" fill="#efe9df"/><rect x="178" y="110" width="20" height="62" rx="9" fill="#efe9df"/>
+  <rect x="26" y="44" width="190" height="96" rx="44" fill="${C("#f7f3ec")}"/>
+  <path d="M60 52 q30 -6 34 26 q-10 26 -40 14 q-14 -20 6 -40z" fill="#3b3330"/>
+  <path d="M150 90 q24 -14 40 4 q-4 30 -34 30 q-16 -14 -6 -34z" fill="#3b3330"/>
+  <ellipse cx="120" cy="140" rx="18" ry="10" fill="#f2a7b5"/>
+  <path d="M30 70 q-22 10 -18 40" stroke="#3b3330" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <circle cx="226" cy="58" r="34" fill="${C("#f7f3ec")}"/>
+  <ellipse cx="240" cy="78" rx="24" ry="16" fill="#f2b8c2"/>
+  <path d="M206 30 q-6 -16 6 -22 M244 28 q8 -16 -2 -22" stroke="#d9c49a" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <circle cx="220" cy="52" r="4.5" fill="#2b1d14"/><circle cx="240" cy="52" r="4.5" fill="#2b1d14"/></g>`;
+const henSvg = (c) => `<g filter="url(#soft)">
+  <path d="M34 66 l-2 16 M48 66 l2 16" stroke="#e39a2c" stroke-width="5" stroke-linecap="round"/>
+  <path d="M8 30 q-6 -18 12 -22 q-2 12 6 20z" fill="${C(c)}"/>
+  <ellipse cx="40" cy="48" rx="28" ry="22" fill="${C(c)}"/>
+  <circle cx="60" cy="26" r="14" fill="${C(c)}"/>
+  <path d="M54 12 q4 -10 8 0 q4 -8 8 2 z" fill="#e0453a"/>
+  <path d="M72 26 l10 4 -10 4z" fill="#f2b33d"/><ellipse cx="66" cy="38" rx="4" ry="6" fill="#e0453a"/>
+  <circle cx="63" cy="23" r="3" fill="#2b1d14"/></g>`;
+
+/* =========== 1) الشارع ومبنى المركز =========== */
+R.sky(reel, world, { w: 3200, h: G, night: [[0, 0], [T[8] - .1, 0], [T[8] + .7, .9, "inOut"], [T[10] - .2, .9], [T[10] + .6, 0, "inOut"]] });
+R.skyline(world, 0, G - 40, 3200, { color: "#cfe0d8" });
+R.street(world, 0, G, 3200, { h: 1700 });
+for (const x of [150, 1700, 2600]) R.palm(world, x, G + 4, 1.25);
+for (const x of [330, 1500, 2300]) R.bush(world, x, G + 6, 1.1, "#3f9a5c");
+
+const SX = 900;
+const shop = R.shop(world, SX, G, { w: 760, h: 620, sign: "مركز أليف", color: GREEN, wall: "#f4efe2", awning: GOLD });
+R.drop(reel, shop.parts.wall, W(0, 0), { height: 240 });
+R.drop(reel, shop.parts.window, W(0, 1) - .12);
+R.drop(reel, shop.parts.door, W(0, 1) + .06);
+R.drop(reel, shop.parts.awning, W(0, 2) - .05, { height: 130 });
+R.drop(reel, shop.parts.sign, W(0, 3), { height: 280 });
+// صليب بيطري أخضر على الحيط
+const plus = R.svg(shop.root, 110, 110, `<g filter="url(#soft)"><circle cx="55" cy="55" r="50" fill="#fff"/><path d="M42 20h26v22h22v26H68v22H42V68H20V42h22z" fill="${C(GREEN)}"/></g>`, { x: 600, y: 300 });
+R.popIn(reel, plus, W(0, 4), { origin: "50% 50%", note: "cross" });
+// ضوء الشباك بالليل
+const glow = R.box(shop.root, 40, 170, 360, 300, { background: "radial-gradient(closest-side, rgba(255,214,120,.85), rgba(255,214,120,0))", mixBlendMode: "screen" });
+reel.on(t => { glow.style.opacity = R.k(t, [[0, 0], [T[8] + .3, 0], [T[8] + .9, 1], [T[10] - .2, 1], [T[10] + .5, 0]]); });
+
+// عيادة + متجر
+bubble(SX - 210, G - 820, "heart", GREEN, W(1, 0), T[2] - .1);
+bubble(SX + 210, G - 820, "bag", GOLD2, W(1, 1), T[2] - .1);
+const join = R.svg(world, 140, 140, `<g filter="url(#soft)"><circle cx="70" cy="70" r="62" fill="${C(GOLD)}"/><path d="M42 70 l18 18 36 -38" stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`, { x: SX - 70, y: G - 890 });
+R.popIn(reel, join, W(1, 3), { origin: "50% 50%", out: T[2] - .1, note: "together" });
+cam.punch(W(1, 3), .05);
+
+// صاحب القطة والكلب
+const owner = R.person(reel, world, 1950, G + 12, { shirt: "#3c78d8", skin: R.SKIN[1], hair: "#3a2618", s: 1.05 });
+owner.face(-1).show(T[2] - .25, T[3]).move(T[2] - .2, W(2, 3) + .35, -720);
+const heldCat = R.svg(owner.root, 120, 300, `<g transform="translate(18 112) scale(.62)">${catSvg()}</g>`);
+R.popIn(reel, heldCat, W(2, 1), { origin: "50% 80%", note: "cat" });
+const dogWrap = R.box(world, 2080, G - 130, 200, 145);
+const dogIn = R.svg(dogWrap, 200, 145, `<g transform="translate(200 0) scale(-1 1)">${dogSvg()}</g>`);
+R.popIn(reel, dogIn, W(2, 3), { origin: "50% 100%", note: "dog" });
+reel.on(t => {
+  const dx = R.k(t, [[0, 0], [T[2] - .2, 0], [W(2, 3) + .35, -720, "linear"]]);
+  const walking = t > T[2] - .2 && t < W(2, 3) + .35;
+  dogWrap.style.transform = `translate(${dx}px, ${walking ? -Math.abs(Math.sin(t * 13)) * 8 : 0}px)`;
+  dogWrap.style.visibility = t > T[3] ? "hidden" : "inherit";
+});
+
+/* =========== 2) غرفة الفحص =========== */
+const X1 = 4000;
+R.room(world, X1 - 700, G - 1800, 1400, 2400, { wall: "#e9f3ee", floor: "#cfd8d3" });
+// بوستر صليب + خزانة
+R.svg(world, 220, 220, `<g filter="url(#soft)"><rect width="220" height="220" rx="26" fill="${C(GREEN)}"/><path d="M88 40h44v48h48v44h-48v48H88v-48H40V88h48z" fill="#fff"/></g>`, { x: X1 - 560, y: G - 860 });
+R.svg(world, 300, 520, `<g filter="url(#soft)"><rect width="300" height="520" rx="22" fill="${C("#f7faf8")}"/>
+  ${[0, 1, 2].map(i => `<rect x="20" y="${30 + i * 160}" width="260" height="10" rx="5" fill="#cfd8d3"/>${[0, 1, 2, 3].map(j => `<rect x="${34 + j * 62}" y="${50 + i * 160}" width="44" height="${70 + (j % 2) * 16}" rx="10" fill="${C(["#e6c068", "#7fb8a4", "#f1f1f1", "#d98b5f"][(i + j) % 4])}"/>`).join("")}`).join("")}</g>`, { x: X1 + 300, y: G - 600 });
+// طاولة الفحص
+R.svg(world, 520, 260, `<g filter="url(#soft)"><rect x="0" y="0" width="520" height="44" rx="18" fill="${C("#b8c4cc")}"/><rect x="230" y="40" width="60" height="180" rx="12" fill="${C("#8f9ca6")}"/><rect x="150" y="214" width="220" height="30" rx="14" fill="${C("#76838d")}"/></g>`, { x: X1 - 250, y: G - 270 });
+const tableCat = R.svg(world, 150, 140, `<g transform="scale(1.2)">${catSvg()}</g>`, { x: X1 - 60, y: G - 405 });
+R.popIn(reel, tableCat, T[3] - .01, { sound: false });
+const vet = R.person(reel, world, X1 - 320, G + 14, { shirt: "#f8fbfa", pants: GREEN, skin: R.SKIN[1], hair: "#2b1d14", s: 1.12 });
+vet.show(T[3] - .01, T[4]);
+R.svg(vet.root, 120, 300, `<path d="M44 122 Q46 162 60 164 Q74 162 76 122" stroke="#2f4858" stroke-width="4" fill="none"/><circle cx="60" cy="170" r="7" fill="#b0bec5" stroke="#2f4858" stroke-width="3"/><rect x="66" y="140" width="22" height="10" rx="3" fill="${GREEN}"/>`);
+vet.waveAt(W(3, 0) + .05, .6);
+bubble(X1 - 160, G - 700, "check", GREEN, W(3, 0), T[4] - .05);
+bubble(X1 + 40, G - 790, "syringe", GOLD2, W(3, 1), T[4] - .05);
+bubble(X1 + 240, G - 700, "heart", "#e05a6a", W(3, 2), T[4] - .05);
+cam.punch(W(3, 2), .05);
+
+/* =========== 3) المتجر: الأكل والمستلزمات والأدوية =========== */
+const X2 = 5800;
+R.room(world, X2 - 700, G - 1800, 1400, 2400, { wall: "#f6f0e2", floor: "#c9a77c" });
+const SH = G - 900; // أعلى الرف
+R.svg(world, 940, 840, `<g filter="url(#soft)"><rect width="940" height="840" rx="20" fill="${C("#9a6b43")}"/><rect x="24" y="24" width="892" height="792" rx="12" fill="#f9f3e6"/>
+  ${[250, 520, 790].map(y => `<rect x="10" y="${y}" width="920" height="26" rx="8" fill="${C("#b07e52")}"/>`).join("")}</g>`, { x: X2 - 470, y: SH });
+// رف 1: أكياس أكل (ألوان المركز، بدون علامات تجارية)
+const bagCols = [GREEN, GOLD, "#d9534f", "#5b6fc7", GREEN, "#e98a3a", GOLD];
+bagCols.forEach((c, i) => {
+  const b = R.svg(world, 108, 200, `<g filter="url(#soft)"><path d="M8 18 h92 l-6 178 h-80z" fill="${C(c)}"/><rect x="6" y="6" width="96" height="22" rx="6" fill="${C(c)}"/><circle cx="54" cy="104" r="28" fill="#fff" opacity=".92"/>
+    <g transform="translate(36 86) scale(1.5)" fill="${c}"><circle cx="5" cy="7" r="2.2"/><circle cx="10" cy="3.5" r="2.2"/><circle cx="15" cy="3.5" r="2.2"/><circle cx="19.5" cy="7" r="2.2"/><path d="M12 9c-3 0-6 4-5 6 1 2 3 1 5 1s4 1 5-1c1-2-2-6-5-6z"/></g></g>`, { x: X2 - 430 + i * 124, y: SH + 250 - 200 });
+  R.drop(reel, b, W(4, 1) + i * .07, { height: 120, note: i ? undefined : "food bags" });
+});
+// رف 2: مستلزمات
+const sup = [
+  `<g filter="url(#soft)"><path d="M10 40 h140 l-14 70 h-112z" fill="${C("#3c78d8")}"/><rect x="4" y="30" width="152" height="18" rx="9" fill="${C("#5b8fe0")}"/></g>`, // صحن
+  `<g filter="url(#soft)"><circle cx="70" cy="62" r="52" fill="${C("#e0453a")}"/><path d="M24 50 q46 30 92 0" stroke="#fff" stroke-width="7" fill="none"/></g>`, // طابة
+  `<g filter="url(#soft)"><rect x="6" y="40" width="200" height="72" rx="16" fill="${C("#7fb8a4")}"/><rect x="16" y="28" width="180" height="22" rx="10" fill="${C("#9fd0bd")}"/></g>`, // صندوق رمل
+  `<g filter="url(#soft)"><path d="M20 108 q-10 -90 50 -96 q60 6 50 96" stroke="${GOLD2}" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="20" cy="108" r="12" fill="${C(GREEN)}"/></g>`, // رسن
+];
+const supW = [160, 140, 212, 140];
+let sx = X2 - 420;
+sup.forEach((m, i) => {
+  const n = R.svg(world, supW[i], 120, m, { x: sx, y: SH + 520 - 118 });
+  sx += supW[i] + 50;
+  R.popIn(reel, n, W(4, 2) + i * .08, { sound: i === 0, note: "supplies" });
+});
+// رف 3: أدوية ومكملات
+for (let i = 0; i < 8; i++) {
+  const tall = i % 3 !== 1;
+  const m = tall
+    ? `<g filter="url(#soft)"><rect x="18" y="0" width="34" height="18" rx="5" fill="#f4f4f4"/><rect x="6" y="16" width="58" height="110" rx="16" fill="${C(i % 2 ? "#b5651d" : "#2f7d63")}"/><rect x="12" y="52" width="46" height="40" rx="8" fill="#fff"/><path d="M30 60h10v8h8v10h-8v8H30v-8h-8V68h8z" fill="${GREEN}"/></g>`
+    : `<g filter="url(#soft)"><rect x="2" y="40" width="66" height="86" rx="10" fill="${C(GOLD)}"/><rect x="10" y="66" width="50" height="22" rx="6" fill="#fff"/></g>`;
+  const n = R.svg(world, 70, 126, m, { x: X2 - 430 + i * 108, y: SH + 790 - 126 });
+  R.popIn(reel, n, W(5, 0) + i * .07, { sound: i % 3 === 0, note: "meds" });
+}
+const clerk = R.person(reel, world, X2 + 560, G + 16, { shirt: GREEN, skin: R.SKIN[2], hair: "#1f140d", beard: true, s: 1.1 });
+clerk.face(-1).show(T[4] - .01, T[6]);
+clerk.waveAt(T[4] + .2, .8);
+bubble(X2 + 300, SH - 90, "cross", GREEN, W(5, 2), T[6] - .05, 120);
+
+/* =========== 4) المزرعة =========== */
+const X3 = 7900;
+R.sky(reel, world, { x: 6500, w: 2700, h: G, top: "#86c3ea", bottom: "#eaf6fb" });
+R.svg(world, 2700, 1700, `<rect width="2700" height="1700" fill="${C("#7cc061")}"/><path d="M0 120 Q700 60 1400 130 T2700 110 V0 H0z" fill="#8fcf6f"/>${Array.from({ length: 40 }, (_, i) => `<path d="M${(i * 137) % 2700} ${200 + (i * 71) % 900} q6 -18 12 0" stroke="#5fa548" stroke-width="5" fill="none"/>`).join("")}`, { x: 6500, y: G });
+// تلال وحظيرة وسياج
+R.svg(world, 2700, 380, `<path d="M0 380 Q450 120 900 300 Q1400 80 1900 280 Q2300 160 2700 300 V380z" fill="#a8d98a" opacity=".85"/>`, { x: 6500, y: G - 380 });
+R.svg(world, 520, 460, `<g filter="url(#soft)"><path d="M20 180 L260 30 L500 180 V460 H20z" fill="${C("#c2453a")}"/><path d="M0 190 L260 20 L520 190" stroke="#f4efe2" stroke-width="22" fill="none" stroke-linejoin="round"/>
+  <rect x="170" y="250" width="180" height="210" rx="10" fill="${C("#f4efe2")}"/><path d="M180 260 L340 450 M340 260 L180 450" stroke="#c2453a" stroke-width="14"/><circle cx="260" cy="150" r="34" fill="#f4efe2"/></g>`, { x: 8480, y: G - 460 });
+R.svg(world, 1300, 120, `<g filter="url(#soft)">${Array.from({ length: 14 }, (_, i) => `<rect x="${i * 95}" y="0" width="22" height="120" rx="8" fill="${C("#d9b38c")}"/>`).join("")}<rect x="0" y="30" width="1300" height="16" rx="8" fill="#c99e74"/><rect x="0" y="74" width="1300" height="16" rx="8" fill="#c99e74"/></g>`, { x: 6900, y: G - 120 });
+for (const x of [6620, 8350, 9050]) R.bush(world, x, G + 4, 1.4, "#3f9a5c");
+
+const sheepPos = [[7180, 30], [7380, 60], [7560, 24], [7300, 110], [7500, 120]];
+sheepPos.forEach(([x, dy], i) => {
+  const s = R.svg(world, 170, 120, sheepSvg(), { x, y: G - 100 + dy });
+  if (i % 2) s.style.transform = "scaleX(-1)";
+  R.drop(reel, s, W(6, 0) + .3 + i * .12, { height: 160, note: i ? undefined : "sheep" });
+});
+const cow = R.svg(world, 270, 180, cowSvg(), { x: 7760, y: G - 150 });
+R.drop(reel, cow, W(6, 2), { height: 200, note: "cow" });
+["#f4efe2", "#c9773c", "#f4efe2", "#8a4b2a"].forEach((c, i) => {
+  const h = R.svg(world, 90, 86, henSvg(c), { x: 7280 + i * 140, y: G + 160 + (i % 2) * 30 });
+  R.popIn(reel, h, W(6, 3) + i * .08, { sound: i === 0, note: "hens" });
+});
+const farmer = R.person(reel, world, 8120, G + 40, { shirt: "#a3672f", skin: R.SKIN[2], hair: "#2b1d14", beard: true, s: 1.1 });
+farmer.face(-1).show(T[6] - .01, T[8]);
+farmer.waveAt(W(7, 0), 1.2);
+
+// سيارة المركز
+const van = R.box(world, 6150, G - 200, 420, 230);
+R.svg(van, 420, 230, `<g filter="url(#soft)"><path d="M20 60 q0 -40 40 -40 h220 q30 0 50 26 l60 66 q12 12 12 30 v40 q0 20 -20 20 H30 q-14 0 -14 -14z" fill="${C("#f7faf8")}"/>
+  <rect x="16" y="150" width="386" height="34" rx="10" fill="${C(GREEN)}"/><path d="M300 52 h28 l50 58 h-78z" fill="#bfe3f2"/><rect x="190" y="52" width="90" height="58" rx="8" fill="#bfe3f2"/>
+  <circle cx="110" cy="96" r="36" fill="${GREEN}"/><path d="M100 70h20v16h16v20h-16v16h-20v-16H84V86h16z" fill="#fff"/>
+  <text x="235" y="176" text-anchor="middle" font-family="Lalezar" font-size="30" fill="#fff">مركز أليف</text>
+  <circle cx="96" cy="196" r="30" fill="#2b2f33"/><circle cx="96" cy="196" r="12" fill="#cfd8d3"/><circle cx="330" cy="196" r="30" fill="#2b2f33"/><circle cx="330" cy="196" r="12" fill="#cfd8d3"/></g>`);
+reel.on(t => {
+  const x = R.k(t, [[0, 0], [T[7] - .1, 0], [W(7, 1) + .25, 680, "out"]]);
+  const bump = t > T[7] - .1 && t < W(7, 1) + .25 ? Math.sin(t * 30) * 2 : 0;
+  van.style.transform = `translate(${x}px, ${bump}px)`;
+});
+reel.cue(T[7] - .1, "whoosh", "van");
+const farmVet = R.person(reel, world, 7020, G + 30, { shirt: "#f8fbfa", pants: GREEN, skin: R.SKIN[1], hair: "#2b1d14", s: 1.08 });
+farmVet.show(W(7, 2), T[8]).move(W(7, 2) + .1, T[8], 160);
+R.popIn(reel, farmVet.body, W(7, 2), { sound: false });
+bubble(7260, G - 560, "check", GREEN, W(7, 2) + .1, T[8] - .05);
+
+/* =========== 5) الليل والطوارئ: رجعة للشارع =========== */
+const moon = R.svg(world, 180, 180, `<g filter="url(#soft)"><circle cx="90" cy="90" r="70" fill="#fdf3c8"/><circle cx="122" cy="68" r="62" fill="#2a3b6b" opacity="0"/></g>`, { x: SX + 200, y: G - 1000 });
+R.popIn(reel, moon, W(8, 3), { origin: "50% 50%", out: T[10] - .1, note: "moon" });
+const alarm = R.box(world, SX - 250, G - 900, 140, 140, { background: "#e0453a", borderRadius: "50%", display: "grid", placeItems: "center", boxShadow: "0 0 0 14px rgba(224,69,58,.25), 0 14px 30px rgba(0,0,0,.3)" });
+alarm.innerHTML = R.icon("bell", 76, "#fff", 2.6);
+R.popIn(reel, alarm, W(8, 2), { origin: "50% 50%", out: T[9] + .1, note: "alarm" });
+cam.punch(W(8, 2), .07);
+const runner = R.person(reel, world, 1900, G + 12, { shirt: "#7d5bd6", skin: R.SKIN[0], hair: "#5a3a22", face: "wow", s: 1.05 });
+runner.face(-1).show(T[8] + .2, T[9] + .2).move(T[8] + .2, T[9] + .2, -700);
+const runDog = R.svg(runner.root, 120, 300, `<g transform="translate(14 120) scale(.5)">${dogSvg("#e0b072")}</g>`);
+
+/* =========== الكاميرا =========== */
+cam.keys.length = 0;
+cam.to(0, SX, G - 460, .92)
+   .to(W(0, 3), SX, G - 450, 1.12, "soft")
+   .to(T[1], SX, G - 480, 1.05)
+   .to(T[2], SX + 120, G - 450, 1.05)
+   .to(T[3] - .001, SX + 420, G - 430, 1.12, "inOut")
+   .to(T[3], X1 - 60, G - 480, 1.16)                      // قطع: غرفة الفحص
+   .to(T[4] - .001, X1 - 20, G - 470, 1.26, "linear")
+   .to(T[4], X2, SH + 330, 1.15)                           // قطع: المتجر
+   .to(T[5] - .1, X2, SH + 400, 1.15, "inOut")
+   .to(T[6] - .001, X2, SH + 460, 1.18, "inOut")
+   .to(T[6], 7420, G - 330, 1.05)                          // قطع: المزرعة
+   .to(W(6, 2), 7780, G - 330, .95, "inOut")
+   .to(T[7], 7300, G - 330, 1.0, "inOut")
+   .to(T[8] - .001, 7150, G - 350, 1.06)
+   .to(T[8], SX + 250, G - 480, .95)                       // قطع: الشارع بالليل
+   .to(T[9], SX + 100, G - 500, 1.0, "inOut")
+   .to(T[10], SX, G - 480, .95)
+   .to(END, SX, G - 450, .88, "soft");
+
+/* =========== الموبايل: اتصال طوارئ =========== */
+const ph = R.phone(reel, reel.stage, 540, 2030, { w: 400, bg: GREEN });
+ph.screen.insertAdjacentHTML("beforeend", `
+<div style="height:100%;background:linear-gradient(170deg,#0a6a4f,#063d2e);color:#fff;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box">
+  <div style="width:132px;height:132px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 10px rgba(230,192,104,.35)"><img src="logo-transparent.png" style="height:112px"></div>
+  <div style="font:46px Lalezar;margin-top:18px">مركز أليف البيطري</div>
+  <div style="font-size:.85em;opacity:.85">د. معتصم نصار</div>
+  <div style="direction:ltr;font:600 30px 'IBM Plex Sans Arabic';margin-top:10px;color:${GOLD}">+970 569 003 976</div>
+  <div id="st" style="margin-top:14px;font-size:.8em;opacity:.8">جاري الاتصال…</div>
+  <div style="margin-top:auto;margin-bottom:70px;display:flex;gap:80px">
+    <div style="width:84px;height:84px;border-radius:50%;background:#e0453a;display:grid;place-items:center;transform:rotate(135deg)">${R.icon("phone", 42, "#fff", 2.4)}</div>
+    <div id="ans" style="width:84px;height:84px;border-radius:50%;background:#2ecc71;display:grid;place-items:center">${R.icon("phone", 42, "#fff", 2.4)}</div>
+  </div>
+</div>`);
+const st = ph.screen.querySelector("#st"), ans = ph.screen.querySelector("#ans");
+reel.on(t => {
+  const up = R.pop(t, T[9] - .15, .55), down = R.ease.in(R.clamp((t - (T[10] - .3)) / .35));
+  ph.root.style.transform = `translateY(${(1 - up) * 900 + down * 1100}px) rotate(${(1 - up) * 6}deg)`;
+  ph.root.style.visibility = t < T[9] - .2 || t > T[10] + .1 ? "hidden" : "visible";
+  const on = t >= W(9, 2);
+  const lbl = on ? "متصل · الطبيب معك" : "جاري الاتصال…";
+  if (st.textContent !== lbl) st.textContent = lbl;
+  ans.style.transform = `scale(${on ? 1 : 1 + .12 * Math.abs(Math.sin(t * 8))})`;
+});
+reel.cue(T[9] + .2, "ring", "call");
+R.notify(reel, ph, W(9, 2), "طوارئ مركز أليف", "على مدار الساعة · 0569003976", { accent: GREEN, icon: "bell", until: T[10] - .4 });
+
+/* =========== الدوك والكابشن وبطاقة النهاية =========== */
+R.dock(reel, [
+  { icon: "store", at: W(0, 0) }, { icon: "paw", at: W(2, 1) }, { icon: "syringe", at: W(3, 1) }, { icon: "bag", at: W(4, 1) },
+  { icon: "pill", at: W(5, 0) }, { icon: "sheep", at: W(6, 1) }, { icon: "car", at: T[7] }, { icon: "moon", at: W(8, 3), color: "#e0453a" },
+  { icon: "phone", at: W(9, 2), color: "#4cc276" },
+], { from: W(0, 3), accent: GOLD });
+R.caption(reel, TM.words, { y: 400, size: 128, ends: TM.ends, hold: .5, emph: Object.fromEntries([[3, GOLD], [4, GOLD], [31, "#ff8a7a"], [39, GOLD]]) });
+const card = R.endcard(reel, W(10, 2), { name: "مركز أليف", tagline: "رعاية متكاملة لحياة صحية", color: GREEN, logo: `<img src="logo-white.png" style="height:96px">` });
+card.insertAdjacentHTML("beforeend", `<div style="direction:ltr;font:600 34px 'IBM Plex Sans Arabic';color:${GOLD2}">+970 569 003 976</div>`);
+</script>
+</body>
+</html>

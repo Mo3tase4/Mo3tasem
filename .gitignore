@@ -6,3 +6,8 @@ reels/out/*.wav
 
 # Maven Reels: rights forbid publishing it, and this repo is public
 .claude/skills/maven-reels/
+
+# Maven reels: intermediate files
+maven/*/silent.mp4
+maven/*/mix.wav
+maven/*/sheet.jpg

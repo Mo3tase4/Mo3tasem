@@ -1,0 +1,247 @@
+[
+ {
+  "t": 0.15,
+  "kind": "tick",
+  "note": "dock store"
+ },
+ {
+  "t": 0.6,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 0.88,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 1.06,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 1.35,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 1.75,
+  "kind": "pop",
+  "note": "cross"
+ },
+ {
+  "t": 1.8,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 2.6,
+  "kind": "pop",
+  "note": "heart"
+ },
+ {
+  "t": 3,
+  "kind": "pop",
+  "note": "bag"
+ },
+ {
+  "t": 3.8,
+  "kind": "pop",
+  "note": "together"
+ },
+ {
+  "t": 4.95,
+  "kind": "pop",
+  "note": "cat"
+ },
+ {
+  "t": 4.95,
+  "kind": "tick",
+  "note": "dock paw"
+ },
+ {
+  "t": 5.75,
+  "kind": "pop",
+  "note": "dog"
+ },
+ {
+  "t": 6.5,
+  "kind": "pop",
+  "note": "check"
+ },
+ {
+  "t": 6.9,
+  "kind": "pop",
+  "note": "syringe"
+ },
+ {
+  "t": 6.9,
+  "kind": "tick",
+  "note": "dock syringe"
+ },
+ {
+  "t": 7.4,
+  "kind": "pop",
+  "note": "heart"
+ },
+ {
+  "t": 8.75,
+  "kind": "tick",
+  "note": "dock bag"
+ },
+ {
+  "t": 9.15,
+  "kind": "pop",
+  "note": "supplies"
+ },
+ {
+  "t": 9.2,
+  "kind": "land",
+  "note": "food bags"
+ },
+ {
+  "t": 9.27,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 9.34,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 9.41,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 9.48,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 9.55,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 9.62,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 10,
+  "kind": "pop",
+  "note": "meds"
+ },
+ {
+  "t": 10,
+  "kind": "tick",
+  "note": "dock pill"
+ },
+ {
+  "t": 10.21,
+  "kind": "pop",
+  "note": "meds"
+ },
+ {
+  "t": 10.42,
+  "kind": "pop",
+  "note": "meds"
+ },
+ {
+  "t": 11,
+  "kind": "pop",
+  "note": "cross"
+ },
+ {
+  "t": 12.25,
+  "kind": "tick",
+  "note": "dock sheep"
+ },
+ {
+  "t": 12.7,
+  "kind": "land",
+  "note": "sheep"
+ },
+ {
+  "t": 12.78,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 12.86,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 12.94,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 13.02,
+  "kind": "land",
+  "note": ""
+ },
+ {
+  "t": 13.2,
+  "kind": "land",
+  "note": "cow"
+ },
+ {
+  "t": 13.25,
+  "kind": "pop",
+  "note": "hens"
+ },
+ {
+  "t": 14,
+  "kind": "whoosh",
+  "note": "van"
+ },
+ {
+  "t": 14.1,
+  "kind": "tick",
+  "note": "dock car"
+ },
+ {
+  "t": 15,
+  "kind": "pop",
+  "note": "check"
+ },
+ {
+  "t": 16.45,
+  "kind": "pop",
+  "note": "alarm"
+ },
+ {
+  "t": 16.85,
+  "kind": "pop",
+  "note": "moon"
+ },
+ {
+  "t": 16.85,
+  "kind": "tick",
+  "note": "dock moon"
+ },
+ {
+  "t": 18.2,
+  "kind": "ring",
+  "note": "call"
+ },
+ {
+  "t": 18.8,
+  "kind": "notify",
+  "note": "طوارئ مركز أليف"
+ },
+ {
+  "t": 18.8,
+  "kind": "tick",
+  "note": "dock phone"
+ },
+ {
+  "t": 20.75,
+  "kind": "pop",
+  "note": "end card"
+ }
+]
