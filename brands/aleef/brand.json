@@ -1,0 +1,101 @@
+{
+ "schema": 2,
+ "slug": "aleef",
+ "name": "مركز أليف البيطري",
+ "description": "عيادة بيطرية ومركز بيع أكل ومستلزمات وأدوية بيطرية في عزون، قلقيلية. الفيديوهات لمربي الأغنام والأبقار والدواجن ولأصحاب القطط والكلاب.",
+ "language": "ar",
+ "colors": {
+  "primary": "#065841",
+  "accent": "#E6C068",
+  "light": "#FFFFFF",
+  "text_on_primary": "#FFFFFF",
+  "text_on_accent": "#065841",
+  "extra": {
+   "gold_on_light": "#B8902F",
+   "marker": "#E6C068",
+   "ink": "#065841"
+  }
+ },
+ "fonts": {
+  "heading": {
+   "family": "Cairo",
+   "weights": [
+    600,
+    700,
+    800
+   ],
+   "source": "google"
+  },
+  "body": {
+   "family": "Cairo",
+   "weights": [
+    500,
+    600,
+    700
+   ],
+   "source": "google"
+  }
+ },
+ "logos": {
+  "on_dark": "assets/logo-white.png",
+  "on_light": "assets/logo-transparent.png",
+  "mark_on_dark": "assets/logo-white.png",
+  "mark_on_light": "assets/logo-transparent.png"
+ },
+ "lut": null,
+ "tagline": "رعاية متكاملة لحياة صحية",
+ "guide": null,
+ "rules": "rules.md",
+ "styles": {
+  "default": "marker",
+  "allowed": [
+   "marker",
+   "brand",
+   "minimal",
+   "editorial",
+   "bold"
+  ]
+ },
+ "subtitles_default": "accent",
+ "motion": null,
+ "tone": {
+  "preset": "warm"
+ },
+ "voice": "دافي وطبي وواضح: عامية فلسطينية بالعناوين وفصحى بسيطة بالتفاصيل. معلومة دقيقة بدل الوعود.",
+ "forbidden_imagery": [
+  "دم كثير أو منظر مؤذي بدون موافقة د. معتصم",
+  "وجه د. معتصم",
+  "علبة Super Cat"
+ ],
+ "forbidden_imagery_en": [
+  "heavy blood or graphic injury without the vet's approval",
+  "the vet's face",
+  "Super Cat can packaging"
+ ],
+ "cta_library": null,
+ "asset_verdicts": null,
+ "approver": "د. معتصم نصار",
+ "account": "business",
+ "music_policy": "do not burn in without a commercial license; pick the track in the app when publishing",
+ "memes_policy": "strict",
+ "inserts": {},
+ "brandbook": [],
+ "fonts_found": null,
+ "examples": [],
+ "derived": [
+  "light: no light color, using #FFFFFF"
+ ],
+ "created": "2026-11-19",
+ "updated": "2026-11-19",
+ "last_used": null,
+ "forbidden_words": [
+  "علاج مضمون",
+  "شفاء 100%",
+  "توصيل"
+ ],
+ "cta": {
+  "site": "https://maps.app.goo.gl/DztEyov3zjH9Wfki7",
+  "handle": "+970569003976",
+  "code_word": null
+ }
+}
