@@ -1,0 +1,83 @@
+{
+ "slug": "aleef",
+ "name": "مركز أليف البيطري",
+ "tagline": "رعاية متكاملة لحياة صحية",
+ "colors": {
+  "primary": "#065841",
+  "accent": "#E6C068",
+  "light": "#FFFFFF",
+  "text_on_primary": "#FFFFFF",
+  "text_on_accent": "#065841",
+  "extra": {
+   "gold_on_light": "#B8902F",
+   "marker": "#E6C068",
+   "ink": "#065841"
+  }
+ },
+ "fonts": {
+  "heading": {
+   "family": "Cairo",
+   "weights": [
+    700,
+    800,
+    900
+   ],
+   "source": "local",
+   "files": [
+    "brands/aleef/Cairo-Regular.ttf",
+    "brands/aleef/Cairo-SemiBold.ttf",
+    "brands/aleef/Cairo-Bold.ttf",
+    "brands/aleef/Cairo-ExtraBold.ttf",
+    "brands/aleef/Cairo-Black.ttf"
+   ]
+  },
+  "body": {
+   "family": "Cairo",
+   "weights": [
+    400,
+    600,
+    700,
+    800
+   ],
+   "source": "local",
+   "files": [
+    "brands/aleef/Cairo-Regular.ttf",
+    "brands/aleef/Cairo-SemiBold.ttf",
+    "brands/aleef/Cairo-Bold.ttf",
+    "brands/aleef/Cairo-ExtraBold.ttf",
+    "brands/aleef/Cairo-Black.ttf"
+   ]
+  }
+ },
+ "logos": {
+  "on_dark": "brands/aleef/logo-white.png",
+  "on_light": "brands/aleef/logo-transparent.png",
+  "mark_on_dark": "brands/aleef/logo-white.png",
+  "mark_on_light": "brands/aleef/logo-transparent.png"
+ },
+ "motion": "calm",
+ "tone": {
+  "preset": "warm",
+  "label": "Warm, caring",
+  "loudness": "calm",
+  "overshoot": false,
+  "shake": false,
+  "scene_tone": "calm",
+  "scene_tones": [
+   "calm",
+   "feature",
+   "cinematic"
+  ],
+  "full_scenes_max": 1,
+  "transitions": [
+   "cut",
+   "fade",
+   "slide"
+  ],
+  "flash_max": 0,
+  "whip_max": 0,
+  "sfx": "sparse"
+ },
+ "subtitles_default": "accent",
+ "style_default": "marker"
+}

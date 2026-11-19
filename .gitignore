@@ -1,0 +1,5 @@
+reels/node_modules/
+reels/out/*.png
+reels/out/emergency-silent.mp4
+reels/out/emergency-mix.mp4
+reels/out/*.wav

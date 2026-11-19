@@ -1,0 +1,356 @@
+{
+ "schema": 1,
+ "id": "promo-emergency",
+ "created": "2026-11-19T10:36",
+ "duration": 22.0,
+ "segments": [],
+ "inserts": [
+  {
+   "id": "c01",
+   "kind": "scene",
+   "type": "hook",
+   "mode": "full",
+   "variant": "stack",
+   "segment": null,
+   "start": 0.0,
+   "dur": 3.0,
+   "at": "0",
+   "tone": null,
+   "text": {
+    "lines": [
+     "حيوانك بخطر؟",
+     "متى لازم تجيبه للطوارئ؟"
+    ],
+    "accent": "للطوارئ",
+    "label": null
+   },
+   "items": null,
+   "value": null,
+   "media": null,
+   "interaction": null,
+   "box": null,
+   "side": null,
+   "source": {
+    "kind": "brief",
+    "ref": "طلب د. معتصم: بوستر الطوارئ"
+   },
+   "what": "سؤال الافتتاح",
+   "why": "يشد صاحب الحيوان من أول ثانية",
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "hit",
+   "hide_subtitles": true,
+   "status": "ready",
+   "fallback": "main footage"
+  },
+  {
+   "id": "c02",
+   "kind": "scene",
+   "type": "list",
+   "mode": "full",
+   "variant": null,
+   "segment": null,
+   "start": 3.0,
+   "dur": 6.0,
+   "at": "3.0",
+   "tone": null,
+   "text": {
+    "lines": [],
+    "accent": null,
+    "label": "علامات خطر ⚠️"
+   },
+   "items": [
+    {
+     "text": "نزيف ما بيوقف",
+     "t": 3.5
+    },
+    {
+     "text": "صعوبة بالتنفس",
+     "t": 4.6
+    },
+    {
+     "text": "تشنجات أو إغماء",
+     "t": 5.7
+    }
+   ],
+   "value": null,
+   "media": null,
+   "interaction": null,
+   "box": null,
+   "side": null,
+   "source": {
+    "kind": "agent",
+    "ref": "علامات طوارئ بيطرية عامة، بانتظار تأكيد د. معتصم"
+   },
+   "what": "أول 3 علامات",
+   "why": "معلومة مفيدة بتنحفظ",
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "card",
+   "hide_subtitles": true,
+   "status": "ready",
+   "fallback": "main footage"
+  },
+  {
+   "id": "c03",
+   "kind": "scene",
+   "type": "list",
+   "mode": "full",
+   "variant": null,
+   "segment": null,
+   "start": 9.0,
+   "dur": 6.0,
+   "at": "9.0",
+   "tone": null,
+   "text": {
+    "lines": [],
+    "accent": null,
+    "label": "وكمان ⚠️"
+   },
+   "items": [
+    {
+     "text": "بلع سم أو دوا بشري",
+     "t": 9.5
+    },
+    {
+     "text": "بطن منفوخ وقاسي",
+     "t": 10.6
+    },
+    {
+     "text": "ما بيقدر يبول",
+     "t": 11.7
+    }
+   ],
+   "value": null,
+   "media": null,
+   "interaction": null,
+   "box": null,
+   "side": null,
+   "source": {
+    "kind": "agent",
+    "ref": "علامات طوارئ بيطرية عامة، بانتظار تأكيد د. معتصم"
+   },
+   "what": "3 علامات ثانية",
+   "why": "تكملة القائمة",
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "card",
+   "hide_subtitles": true,
+   "status": "ready",
+   "fallback": "main footage"
+  },
+  {
+   "id": "c04",
+   "kind": "scene",
+   "type": "slogan",
+   "mode": "full",
+   "variant": null,
+   "segment": null,
+   "start": 15.0,
+   "dur": 3.0,
+   "at": "15.0",
+   "tone": null,
+   "text": {
+    "lines": [
+     "كل دقيقة",
+     "بتفرق"
+    ],
+    "accent": "بتفرق",
+    "label": null
+   },
+   "items": null,
+   "value": null,
+   "media": null,
+   "interaction": null,
+   "box": null,
+   "side": null,
+   "source": {
+    "kind": "brand",
+    "ref": "rules.md: الطوارئ"
+   },
+   "what": "رسالة الاستعجال",
+   "why": "تحويل المعلومة لفعل",
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "hit",
+   "hide_subtitles": true,
+   "status": "ready",
+   "fallback": "main footage"
+  },
+  {
+   "id": "c05",
+   "kind": "scene",
+   "type": "cta",
+   "mode": "full",
+   "variant": "tap",
+   "segment": null,
+   "start": 18.0,
+   "dur": 4.0,
+   "at": "18.0",
+   "tone": null,
+   "text": {
+    "lines": [
+     "نستقبل الطوارئ دايماً",
+     "+970 569 003 976"
+    ],
+    "accent": null,
+    "label": null
+   },
+   "items": null,
+   "value": null,
+   "media": null,
+   "interaction": null,
+   "box": null,
+   "side": null,
+   "source": {
+    "kind": "brand",
+    "ref": "clinic-database.md: الطوارئ ورقم د. معتصم"
+   },
+   "what": "رقم الطوارئ",
+   "why": "الدعوة للتواصل",
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "tap",
+   "hide_subtitles": true,
+   "status": "ready",
+   "fallback": "main footage"
+  }
+ ],
+ "keep_clear": [],
+ "captions_id": "1a3cc45cf172",
+ "brand": "aleef",
+ "settings": {
+  "brand": "aleef",
+  "style": null,
+  "subtitles": null,
+  "subtitles_shade": null,
+  "intensity": "moderate",
+  "use_broll": false,
+  "use_project_footage": true,
+  "use_local_footage": true,
+  "use_generated_footage": true,
+  "use_memes": false,
+  "use_local_memes": true,
+  "broll_priority": [
+   "project",
+   "local",
+   "generated"
+  ],
+  "meme_priority": [
+   "local"
+  ],
+  "footage_dirs": [
+   "footage",
+   "broll"
+  ],
+  "memes_dirs": [
+   "memes"
+  ],
+  "generation_engines": [
+   "code"
+  ],
+  "library_dirs": [],
+  "meme_size": "m",
+  "scene_tone": "feature",
+  "use_scenes": true,
+  "settings.brand": "aleef",
+  "brand_tone": {
+   "label": "Warm, caring",
+   "for": "medicine, psychology, wellness, children and family, nonprofits",
+   "intensity": "moderate",
+   "motion": "calm",
+   "loudness": "calm",
+   "memes": {
+    "allowed": false,
+    "default": false,
+    "max": 0,
+    "size_max": null,
+    "cutaway": false
+   },
+   "broll_default": true,
+   "transitions": [
+    "cut",
+    "fade",
+    "slide"
+   ],
+   "flash_max": 0,
+   "whip_max": 0,
+   "shake": false,
+   "overshoot": false,
+   "full_scenes_max": 1,
+   "scene_tones": [
+    "calm",
+    "feature",
+    "cinematic"
+   ],
+   "scene_tone": "calm",
+   "sfx": "sparse",
+   "preset": "warm"
+  }
+ },
+ "provenance": {
+  "brand": "reel.json",
+  "style": "defaults",
+  "subtitles": "defaults",
+  "subtitles_shade": "defaults",
+  "intensity": "tone:warm",
+  "use_broll": "reel.json",
+  "use_project_footage": "defaults",
+  "use_local_footage": "defaults",
+  "use_generated_footage": "defaults",
+  "use_memes": "reel.json",
+  "use_local_memes": "defaults",
+  "broll_priority": "defaults",
+  "meme_priority": "defaults",
+  "footage_dirs": "defaults",
+  "memes_dirs": "defaults",
+  "generation_engines": "defaults",
+  "library_dirs": "defaults",
+  "meme_size": "defaults",
+  "scene_tone": "reel.json",
+  "use_scenes": "reel.json",
+  "settings.brand": "project",
+  "brand_tone": "brand:aleef"
+ },
+ "effective": {
+  "broll": false,
+  "project_footage": false,
+  "local_footage": false,
+  "generated_code": false,
+  "memes": false,
+  "local_memes": false,
+  "scenes": true,
+  "online_footage": false,
+  "generated_prompts": false,
+  "generate_now": false,
+  "online_memes": false,
+  "online_footage_providers": [],
+  "online_meme_providers": []
+ },
+ "fallback": {
+  "broll": "use_broll=false",
+  "project_footage": "off",
+  "local_footage": "off",
+  "generated_code": "off",
+  "memes": "use_memes=false",
+  "local_memes": "off",
+  "online_footage": "off",
+  "generated_prompts": "off",
+  "generate_now": "off",
+  "online_memes": "off"
+ },
+ "budget": {
+  "label": "moderate",
+  "broll_per_30s": 3,
+  "memes_max": 2,
+  "coverage_max": 0.22,
+  "min_gap_s": 3.5,
+  "broll_max": 3,
+  "coverage_max_s": 4.84
+ },
+ "format": "scenes-only",
+ "end_card": {
+  "kind": "sting",
+  "seconds": 2.6
+ }
+}

@@ -20,20 +20,35 @@
   "heading": {
    "family": "Cairo",
    "weights": [
-    600,
     700,
-    800
+    800,
+    900
    ],
-   "source": "google"
+   "source": "local",
+   "files": [
+    "assets/fonts/Cairo-Regular.ttf",
+    "assets/fonts/Cairo-SemiBold.ttf",
+    "assets/fonts/Cairo-Bold.ttf",
+    "assets/fonts/Cairo-ExtraBold.ttf",
+    "assets/fonts/Cairo-Black.ttf"
+   ]
   },
   "body": {
    "family": "Cairo",
    "weights": [
-    500,
+    400,
     600,
-    700
+    700,
+    800
    ],
-   "source": "google"
+   "source": "local",
+   "files": [
+    "assets/fonts/Cairo-Regular.ttf",
+    "assets/fonts/Cairo-SemiBold.ttf",
+    "assets/fonts/Cairo-Bold.ttf",
+    "assets/fonts/Cairo-ExtraBold.ttf",
+    "assets/fonts/Cairo-Black.ttf"
+   ]
   }
  },
  "logos": {

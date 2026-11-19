@@ -1,0 +1,265 @@
+{
+ "video": "",
+ "captions": {
+  "duration": 22.0,
+  "segments": [],
+  "words": []
+ },
+ "brand": {
+  "slug": "aleef",
+  "name": "مركز أليف البيطري",
+  "tagline": "رعاية متكاملة لحياة صحية",
+  "colors": {
+   "primary": "#065841",
+   "accent": "#E6C068",
+   "light": "#FFFFFF",
+   "text_on_primary": "#FFFFFF",
+   "text_on_accent": "#065841",
+   "extra": {
+    "gold_on_light": "#B8902F",
+    "marker": "#E6C068",
+    "ink": "#065841"
+   }
+  },
+  "fonts": {
+   "heading": {
+    "family": "Cairo",
+    "weights": [
+     700,
+     800,
+     900
+    ],
+    "source": "local",
+    "files": [
+     "brands/aleef/Cairo-Regular.ttf",
+     "brands/aleef/Cairo-SemiBold.ttf",
+     "brands/aleef/Cairo-Bold.ttf",
+     "brands/aleef/Cairo-ExtraBold.ttf",
+     "brands/aleef/Cairo-Black.ttf"
+    ]
+   },
+   "body": {
+    "family": "Cairo",
+    "weights": [
+     400,
+     600,
+     700,
+     800
+    ],
+    "source": "local",
+    "files": [
+     "brands/aleef/Cairo-Regular.ttf",
+     "brands/aleef/Cairo-SemiBold.ttf",
+     "brands/aleef/Cairo-Bold.ttf",
+     "brands/aleef/Cairo-ExtraBold.ttf",
+     "brands/aleef/Cairo-Black.ttf"
+    ]
+   }
+  },
+  "logos": {
+   "on_dark": "brands/aleef/logo-white.png",
+   "on_light": "brands/aleef/logo-transparent.png",
+   "mark_on_dark": "brands/aleef/logo-white.png",
+   "mark_on_light": "brands/aleef/logo-transparent.png"
+  },
+  "motion": "calm",
+  "tone": {
+   "preset": "warm",
+   "label": "Warm, caring",
+   "loudness": "calm",
+   "overshoot": false,
+   "shake": false,
+   "scene_tone": "calm",
+   "scene_tones": [
+    "calm",
+    "feature",
+    "cinematic"
+   ],
+   "full_scenes_max": 1,
+   "transitions": [
+    "cut",
+    "fade",
+    "slide"
+   ],
+   "flash_max": 0,
+   "whip_max": 0,
+   "sfx": "sparse"
+  },
+  "subtitles_default": "accent",
+  "style_default": "marker"
+ },
+ "inserts": [],
+ "subtitles": "none",
+ "style": "marker",
+ "hideSubtitles": [
+  [
+   0.0,
+   3.0
+  ],
+  [
+   3.0,
+   9.0
+  ],
+  [
+   9.0,
+   15.0
+  ],
+  [
+   15.0,
+   18.0
+  ],
+  [
+   18.0,
+   22.0
+  ]
+ ],
+ "drift": false,
+ "hook": null,
+ "corner": false,
+ "endCard": {
+  "line2": "رعاية متكاملة لحياة صحية",
+  "seconds": 2.6
+ },
+ "subtitlesTop": 1290,
+ "scenes": [
+  {
+   "id": "c01",
+   "type": "hook",
+   "mode": "full",
+   "variant": "stack",
+   "start": 0.0,
+   "dur": 3.0,
+   "source": {
+    "kind": "brief",
+    "ref": "طلب د. معتصم: بوستر الطوارئ"
+   },
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "hit",
+   "tone": "feature",
+   "text": {
+    "lines": [
+     "حيوانك بخطر؟",
+     "متى لازم تجيبه للطوارئ؟"
+    ],
+    "accent": "للطوارئ"
+   },
+   "hide_subtitles": true
+  },
+  {
+   "id": "c02",
+   "type": "list",
+   "mode": "full",
+   "start": 3.0,
+   "dur": 6.0,
+   "source": {
+    "kind": "agent",
+    "ref": "علامات طوارئ بيطرية عامة، بانتظار تأكيد د. معتصم"
+   },
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "card",
+   "tone": "feature",
+   "text": {
+    "lines": [],
+    "label": "علامات خطر ⚠️"
+   },
+   "items": [
+    {
+     "text": "نزيف ما بيوقف",
+     "t": 3.5
+    },
+    {
+     "text": "صعوبة بالتنفس",
+     "t": 4.6
+    },
+    {
+     "text": "تشنجات أو إغماء",
+     "t": 5.7
+    }
+   ],
+   "hide_subtitles": true
+  },
+  {
+   "id": "c03",
+   "type": "list",
+   "mode": "full",
+   "start": 9.0,
+   "dur": 6.0,
+   "source": {
+    "kind": "agent",
+    "ref": "علامات طوارئ بيطرية عامة، بانتظار تأكيد د. معتصم"
+   },
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "card",
+   "tone": "feature",
+   "text": {
+    "lines": [],
+    "label": "وكمان ⚠️"
+   },
+   "items": [
+    {
+     "text": "بلع سم أو دوا بشري",
+     "t": 9.5
+    },
+    {
+     "text": "بطن منفوخ وقاسي",
+     "t": 10.6
+    },
+    {
+     "text": "ما بيقدر يبول",
+     "t": 11.7
+    }
+   ],
+   "hide_subtitles": true
+  },
+  {
+   "id": "c04",
+   "type": "slogan",
+   "mode": "full",
+   "start": 15.0,
+   "dur": 3.0,
+   "source": {
+    "kind": "brand",
+    "ref": "rules.md: الطوارئ"
+   },
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "hit",
+   "tone": "feature",
+   "text": {
+    "lines": [
+     "كل دقيقة",
+     "بتفرق"
+    ],
+    "accent": "بتفرق"
+   },
+   "hide_subtitles": true
+  },
+  {
+   "id": "c05",
+   "type": "cta",
+   "mode": "full",
+   "variant": "tap",
+   "start": 18.0,
+   "dur": 4.0,
+   "source": {
+    "kind": "brand",
+    "ref": "clinic-database.md: الطوارئ ورقم د. معتصم"
+   },
+   "transition_in": "slide",
+   "transition_out": "slide",
+   "sound": "tap",
+   "tone": "feature",
+   "text": {
+    "lines": [
+     "نستقبل الطوارئ دايماً",
+     "+970 569 003 976"
+    ]
+   },
+   "hide_subtitles": true
+  }
+ ],
+ "sceneTone": "feature"
+}
