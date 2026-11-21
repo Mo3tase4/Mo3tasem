@@ -1,0 +1,197 @@
+[
+ {
+  "t": 0.15,
+  "kind": "pop",
+  "note": "storm"
+ },
+ {
+  "t": 0.55,
+  "kind": "pop",
+  "note": "storm"
+ },
+ {
+  "t": 0.95,
+  "kind": "pop",
+  "note": "storm"
+ },
+ {
+  "t": 1.35,
+  "kind": "pop",
+  "note": "storm"
+ },
+ {
+  "t": 1.75,
+  "kind": "pop",
+  "note": "storm"
+ },
+ {
+  "t": 2.6,
+  "kind": "germ",
+  "note": "مايكوبلازما"
+ },
+ {
+  "t": 2.95,
+  "kind": "pop",
+  "note": "sad"
+ },
+ {
+  "t": 4.25,
+  "kind": "land",
+  "note": "bottle مايكوبلازما"
+ },
+ {
+  "t": 4.5,
+  "kind": "shield",
+  "note": "مايكوبلازما"
+ },
+ {
+  "t": 4.5,
+  "kind": "tick",
+  "note": "dock shield"
+ },
+ {
+  "t": 5.5,
+  "kind": "germ",
+  "note": "باستوريلا"
+ },
+ {
+  "t": 5.85,
+  "kind": "pop",
+  "note": "cloud"
+ },
+ {
+  "t": 7.25,
+  "kind": "land",
+  "note": "bottle باستوريلا"
+ },
+ {
+  "t": 7.5,
+  "kind": "shield",
+  "note": "باستوريلا"
+ },
+ {
+  "t": 7.5,
+  "kind": "tick",
+  "note": "dock shield"
+ },
+ {
+  "t": 8.5,
+  "kind": "germ",
+  "note": "تسمم غذائي"
+ },
+ {
+  "t": 8.85,
+  "kind": "pop",
+  "note": "bucket"
+ },
+ {
+  "t": 10.65,
+  "kind": "land",
+  "note": "bottle تسمم غذائي"
+ },
+ {
+  "t": 10.9,
+  "kind": "shield",
+  "note": "تسمم غذائي"
+ },
+ {
+  "t": 10.9,
+  "kind": "tick",
+  "note": "dock shield"
+ },
+ {
+  "t": 11.9,
+  "kind": "germ",
+  "note": "تسمم معوي"
+ },
+ {
+  "t": 12.25,
+  "kind": "pop",
+  "note": "warn"
+ },
+ {
+  "t": 13.95,
+  "kind": "land",
+  "note": "bottle تسمم معوي"
+ },
+ {
+  "t": 14.2,
+  "kind": "shield",
+  "note": "تسمم معوي"
+ },
+ {
+  "t": 14.2,
+  "kind": "tick",
+  "note": "dock shield"
+ },
+ {
+  "t": 15.2,
+  "kind": "germ",
+  "note": "كلاميديا"
+ },
+ {
+  "t": 15.55,
+  "kind": "pop",
+  "note": "bheart"
+ },
+ {
+  "t": 16.95,
+  "kind": "land",
+  "note": "bottle كلاميديا"
+ },
+ {
+  "t": 17.2,
+  "kind": "shield",
+  "note": "كلاميديا"
+ },
+ {
+  "t": 17.2,
+  "kind": "tick",
+  "note": "dock shield"
+ },
+ {
+  "t": 18.3,
+  "kind": "tick",
+  "note": "dock store"
+ },
+ {
+  "t": 18.65,
+  "kind": "land",
+  "note": "shelf مايكوبلازما"
+ },
+ {
+  "t": 19.05,
+  "kind": "land",
+  "note": "shelf باستوريلا"
+ },
+ {
+  "t": 19.55,
+  "kind": "land",
+  "note": "shelf تسمم غذائي"
+ },
+ {
+  "t": 19.95,
+  "kind": "land",
+  "note": "shelf تسمم معوي"
+ },
+ {
+  "t": 20.35,
+  "kind": "land",
+  "note": "shelf كلاميديا"
+ },
+ {
+  "t": 20.95,
+  "kind": "tick",
+  "note": "dock phone"
+ },
+ {
+  "t": 21.15,
+  "kind": "ring",
+  "note": "call"
+ },
+ {
+  "t": 23.9,
+  "kind": "pop",
+  "note": "end card"
+ }
+]

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>تطعيمات القطيع - مركز أليف (ستايل founder-story)</title>
+<!-- 5 أعداء وخمس دروع. بدون جرعات ولا مواعيد ولا أسماء تجارية: المعلومة الطبية الوحيدة هي أسماء الأمراض الخمسة اللي حددها د. معتصم.
+     بدون تعليق صوتي: 2.5 كلمة/ثانية. لما يجهز vo.mp3: python scripts/timestamps.py vo.mp3 words.json --lang ar -->
+<script src="file:///home/user/Mo3tasem/.claude/skills/maven-reels/kit/reel.js"></script>
+<script src="words.js" onerror="window.VOICE=null"></script>
+</head>
+<body>
+<script>
+const SCRIPT = [
+  "قطيعك محمي من هدول الخمسة؟",
+  "أولاً، المايكوبلازما",
+  "وتطعيمها جاهز عنا",
+  "ثانياً، الباستوريلا",
+  "وتطعيمها جاهز عنا",
+  "ثالثاً، التسمم الغذائي",
+  "وتطعيمه جاهز عنا",
+  "رابعاً، التسمم المعوي",
+  "وتطعيمه جاهز عنا",
+  "وخامساً، الكلاميديا",
+  "وتطعيمها جاهز عنا",
+  "وكل هالتطعيمات متوفرة بمركز أليف",
+  "اسألنا عن الجدول المناسب لقطيعك",
+  "مركز أليف، رعاية متكاملة لحياة صحية",
+];
+const TM = R.timing(SCRIPT, window.VOICE, { wps: 2.5, gap: .35 });
+const T = TM.lines;
+const W = (line, n) => TM.words[SCRIPT.slice(0, line).reduce((a, l) => a + l.split(/\s+/).length, 0) + n][1];
+const END = TM.end + 2.2;
+
+const GREEN = "#065841", GOLD = "#E6C068", GOLD2 = "#B8902F";
+const NUM = "+970 568 907 771";            // رقم المركز: عرض منتجات
+const reel = R.reel({ w: 1080, h: 1920, fps: 30, lang: "ar", duration: END, bg: "#1d2a25" });
+const G = 1700;
+const cam = R.world(reel, 9600, 3400);
+const world = cam.el;
+const C = R.clay;
+const S = i => 900 + i * 1250;             // مكان محطة المرض i
+
+Object.assign(R.icons, {
+  shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  cloud: '<path d="M7 18a4 4 0 0 1-.5-8 5.5 5.5 0 0 1 10.6-1A4.5 4.5 0 0 1 17 18z"/><path d="M9 21v-1M13 21v-1"/>',
+  warn: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/>',
+  bucket: '<path d="M5 8h14l-1.5 12h-11z"/><path d="M4 8h16"/><path d="M9 12v4M15 12v4"/>',
+  bheart: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/><path d="M12 7.5l-2 4 3 2-2 4"/>',
+  sheep: '<path d="M6 15c-2 0-3-1.5-2.5-3S5 9.5 6.5 10c.3-2 2.5-3 4-2 1-1.5 3.5-1.5 4.5 0 1.5-.5 3 .5 3 2"/><path d="M6 15h12v-3"/><ellipse cx="19.5" cy="11" rx="2" ry="2.6"/><path d="M8 15v4M15 15v4"/>',
+});
+
+const bubble = (x, y, icon, color, t0, out, size = 130) => {
+  const b = R.box(world, x - size / 2, y - size / 2, size, size, {
+    background: "#fff", borderRadius: "50%", display: "grid", placeItems: "center",
+    boxShadow: "0 14px 30px rgba(0,0,0,.22)", border: `6px solid ${color}`, boxSizing: "border-box",
+  });
+  b.innerHTML = R.icon(icon, size * .55, color, 2.4);
+  R.popIn(reel, b, t0, { origin: "50% 50%", out, note: icon });
+  return b;
+};
+
+const sheepSvg = () => `<g filter="url(#soft)">
+  <rect x="40" y="74" width="12" height="40" rx="6" fill="#3d3a36"/><rect x="62" y="78" width="12" height="38" rx="6" fill="#3d3a36"/>
+  <rect x="98" y="78" width="12" height="38" rx="6" fill="#3d3a36"/><rect x="116" y="74" width="12" height="40" rx="6" fill="#3d3a36"/>
+  ${[[52, 58, 26], [80, 46, 28], [108, 56, 26], [64, 74, 24], [96, 76, 24], [124, 66, 20], [40, 72, 20]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${C("#f6f2e8")}"/>`).join("")}
+  <ellipse cx="146" cy="50" rx="18" ry="24" fill="${C("#3d3a36")}"/>
+  <ellipse cx="130" cy="38" rx="12" ry="6" fill="#3d3a36"/>
+  <circle cx="152" cy="44" r="3.5" fill="#fff"/></g>`;
+
+const germSvg = (c) => {
+  let sp = "";
+  for (let a = 0; a < 12; a++) {
+    const r = a * Math.PI / 6, x1 = 100 + Math.cos(r) * 52, y1 = 100 + Math.sin(r) * 52, x2 = 100 + Math.cos(r) * 86, y2 = 100 + Math.sin(r) * 86;
+    sp += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="13" stroke-linecap="round"/><circle cx="${x2}" cy="${y2}" r="11" fill="${c}"/>`;
+  }
+  return `<g filter="url(#soft)">${sp}<circle cx="100" cy="100" r="62" fill="${C(c)}"/>
+  <circle cx="78" cy="92" r="13" fill="#fff"/><circle cx="122" cy="92" r="13" fill="#fff"/><circle cx="80" cy="96" r="6" fill="#2b1d14"/><circle cx="120" cy="96" r="6" fill="#2b1d14"/>
+  <path d="M62 72 L92 84 M138 72 L108 84" stroke="#2b1d14" stroke-width="7" stroke-linecap="round"/><path d="M76 126 q24 -18 48 0" stroke="#2b1d14" stroke-width="7" fill="none" stroke-linecap="round"/></g>`;
+};
+
+const bottleSvg = (cap) => `<g filter="url(#soft)"><rect x="34" y="0" width="42" height="26" rx="8" fill="${C(cap)}"/><rect x="40" y="22" width="30" height="22" rx="5" fill="#dff1ec"/>
+  <path d="M18 56 q0 -16 20 -16 h34 q20 0 20 16 v118 q0 22 -22 22 H40 q-22 0 -22 -22z" fill="#cfe9e2" stroke="#9ccfc2" stroke-width="3"/>
+  <rect x="26" y="84" width="76" height="76" rx="12" fill="#fff"/><path d="M56 98h16v14h14v16H72v14H56v-14H42v-16h14z" fill="${GREEN}"/>
+  <rect x="26" y="60" width="76" height="14" rx="6" fill="${cap}" opacity=".85"/></g>`;
+
+const shieldSvg = () => `<g filter="url(#soft)"><path d="M100 8 L192 40 V112 C192 172 152 212 100 238 C48 212 8 172 8 112 V40Z" fill="${C(GREEN)}" stroke="${GOLD}" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M62 120 l28 28 52 -62" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+
+const ENEMY = [
+  { c: "#7d4fc4", icon: "sad", ic: "#7d4fc4" },
+  { c: "#c4504f", icon: "cloud", ic: "#c4504f" },
+  { c: "#6b8f2f", icon: "bucket", ic: "#6b8f2f" },
+  { c: "#d4812b", icon: "warn", ic: "#d4812b" },
+  { c: "#c43f8f", icon: "bheart", ic: "#c43f8f" },
+];
+const NAMES = ["مايكوبلازما", "باستوريلا", "تسمم غذائي", "تسمم معوي", "كلاميديا"];
+
+/* =========== العالم: مزرعة =========== */
+R.sky(reel, world, { w: 9600, h: G, night: [[0, .55], [T[1] - .1, .55], [T[1] + .5, 0, "inOut"]] });
+R.svg(world, 9600, 520, `<path d="M0 520 Q500 180 1000 330 Q1500 120 2100 300 Q2600 170 3200 290 Q3800 120 4400 300 Q5000 160 5700 300 Q6400 130 7100 290 Q7800 170 8500 300 Q9100 200 9600 280 V520z" fill="#b9d98f"/>`, { x: 0, y: G - 520 });
+R.svg(world, 9600, 1700, `<rect width="9600" height="1700" fill="${C("#7cc061")}"/>${Array.from({ length: 90 }, (_, i) => `<path d="M${(i * 197) % 9600} ${120 + (i * 71) % 900} q6 -18 12 0" stroke="#5fa548" stroke-width="5" fill="none"/>`).join("")}`, { x: 0, y: G });
+R.svg(world, 6000, 120, `<g filter="url(#soft)">${Array.from({ length: 62 }, (_, i) => `<rect x="${i * 95}" y="0" width="22" height="120" rx="8" fill="${C("#d9b38c")}"/>`).join("")}<rect x="0" y="30" width="6000" height="16" rx="8" fill="#c99e74"/><rect x="0" y="74" width="6000" height="16" rx="8" fill="#c99e74"/></g>`, { x: 0, y: G - 120 });
+for (const x of [150, 2100, 4400, 6300]) R.bush(world, x, G + 4, 1.4, "#3f9a5c");
+
+/* =========== القطعان والأعداء والدروع =========== */
+const flocks = [];
+for (let i = 0; i < 5; i++) {
+  const a = 2 * i + 1, b = 2 * i + 2;
+  const x = S(i);
+  const tA = T[a], tBot = W(b, 0) - .05, tSh = W(b, 1) + .15;
+  // القطيع (4 خرفان)
+  const fl = R.box(world, x - 480, G - 230, 960, 260);
+  for (let k = 0; k < 4; k++) {
+    const s = R.svg(fl, 260, 190, `<g transform="scale(1.5)">${sheepSvg()}</g>`, { x: 40 + k * 215, y: 40 + (k % 2) * 28 });
+    if (k % 2) s.style.transform = "scaleX(-1)";
+  }
+  flocks.push([fl, tA, tSh]);
+  // العدو
+  const gx = x - 150, gy = G - 790;
+  const ge = R.box(world, gx, gy, 300, 300);
+  const gi = R.svg(ge, 300, 300, `<g transform="scale(1.5)">${germSvg(ENEMY[i].c)}</g>`);
+  R.anim(reel, gi, { s: [[tA - .01, 0], [tA + .45, 1, "back"], [tSh - .05, 1], [tSh + .3, 0, "in"]], r: [[0, 0], [tSh - .05, 0], [tSh + .3, 140, "in"]] }, { oy: "50%" });
+  reel.on(t => { ge.style.transform = `translateY(${Math.sin(t * 3 + i) * 16}px)`; });
+  reel.cue(tA, "germ", NAMES[i]);
+  bubble(x - 270, gy + 40, ENEMY[i].icon, ENEMY[i].ic, tA + .35, tSh - .05, 120);
+  // القنينة
+  const bw = R.box(world, x + 230, G - 680, 140, 260);
+  const bi = R.svg(bw, 140, 260, `<g transform="scale(1.3)">${bottleSvg(ENEMY[i].c)}</g>`);
+  R.drop(reel, bi, tBot, { height: 420, note: "bottle " + NAMES[i] });
+  reel.on(t => { bw.style.opacity = t < tSh - .02 ? 1 : Math.max(0, 1 - (t - tSh + .02) / .15); });
+  // الدرع
+  const sh = R.svg(world, 270, 320, `<g transform="scale(1.3)">${shieldSvg()}</g>`, { x: x - 135, y: G - 800 });
+  R.popIn(reel, sh, tSh, { origin: "50% 50%", sound: false });
+  reel.cue(tSh, "shield", NAMES[i]);
+  cam.punch(tSh, .05);
+}
+reel.on(t => {
+  for (const [fl, a, b] of flocks) fl.style.transform = t > a + .3 && t < b ? `translateX(${Math.sin(t * 34) * 7}px)` : "none";
+});
+
+/* غيمات الهوك: خمسة */
+for (let k = 0; k < 5; k++) {
+  const cl = R.svg(world, 300, 150, `<g filter="url(#soft)"><ellipse cx="150" cy="96" rx="130" ry="40" fill="#56627a"/><circle cx="100" cy="70" r="46" fill="#56627a"/><circle cx="170" cy="56" r="56" fill="#4a5570"/><circle cx="215" cy="84" r="38" fill="#56627a"/>
+    <text x="150" y="108" text-anchor="middle" font-family="Lalezar" font-size="52" fill="#fff" opacity=".85">${"١٢٣٤٥"[k]}</text></g>`, { x: S(0) - 590 + k * 215, y: G - 1500 + (k % 2) * 90 });
+  R.popIn(reel, cl, W(0, k), { origin: "50% 50%", out: T[1] - .05, note: "storm" });
+}
+
+/* =========== رف المركز =========== */
+const X2 = 7900;
+R.room(world, X2 - 800, G - 1800, 1600, 2400, { wall: "#0d6a50", floor: "#c9a77c" });
+R.svg(world, 1200, 50, `<g filter="url(#soft)"><rect width="1200" height="40" rx="14" fill="${C("#b07e52")}"/></g>`, { x: X2 - 600, y: G - 600 });
+for (let i = 0; i < 5; i++) {
+  const bx = X2 - 400 + i * 200;
+  const b = R.svg(world, 132, 240, `<g transform="scale(1.2)">${bottleSvg(ENEMY[i].c)}</g>`, { x: bx - 66, y: G - 840 });
+  R.drop(reel, b, W(11, i), { height: 260, note: "shelf " + NAMES[i] });
+  const chip = R.box(world, bx - 90, G - 540, 180, 60, { background: ENEMY[i].c, borderRadius: "99px", color: "#fff", font: "600 26px 'IBM Plex Sans Arabic'", display: "grid", placeItems: "center", boxShadow: "0 8px 20px rgba(0,0,0,.2)" });
+  chip.textContent = NAMES[i];
+  R.popIn(reel, chip, W(11, i) + .3, { origin: "50% 50%", sound: false });
+}
+
+/* =========== الكاميرا =========== */
+cam.keys.length = 0;
+cam.to(0, S(0), G - 560, .82)
+   .to(T[1] - .001, S(0), G - 540, .9, "inOut");
+for (let i = 0; i < 5; i++) {
+  const a = 2 * i + 1, b = 2 * i + 2, x = S(i);
+  if (i > 0) cam.to(T[a] - .5, S(i - 1), G - 470, 1.1).to(T[a], x, G - 470, 1.0, "inOut");
+  else cam.to(T[a], x, G - 470, 1.0);
+  cam.to(W(b, 1) + .1, x, G - 470, 1.1, "soft");
+}
+cam.to(T[11] - .001, S(4), G - 470, 1.1)
+   .to(T[11], X2, G - 560, .96)
+   .to(T[12], X2, G - 540, 1.0, "inOut")
+   .to(T[13], X2, G - 540, .96)
+   .to(END, X2, G - 520, .92, "soft");
+
+/* =========== عدّاد "١ من ٥" =========== */
+const chip = R.box(reel.stage, 340, 538, 400, 84, { background: GOLD, color: GREEN, borderRadius: "99px", font: "52px Lalezar", display: "grid", placeItems: "center", boxShadow: "0 10px 24px rgba(0,0,0,.25)", zIndex: 45 });
+reel.on(t => {
+  let n = 0;
+  for (let i = 0; i < 5; i++) if (t >= T[2 * i + 1] - .02) n = i + 1;
+  const show = t >= T[1] - .02 && t < T[11] - .02;
+  chip.style.visibility = show ? "inherit" : "hidden";
+  const lbl = "٥ ٤ ٣ ٢ ١".split(" ").reverse()[n - 1] + " من ٥";
+  if (n > 0 && chip.textContent !== lbl) chip.textContent = lbl;
+  const p = n ? R.pop(t, T[2 * n - 1], .35) : 1;
+  chip.style.transform = `scale(${.85 + .15 * p})`;
+});
+
+/* =========== الموبايل: اتصال =========== */
+const ph = R.phone(reel, reel.stage, 540, 2030, { w: 400, bg: GREEN });
+ph.screen.insertAdjacentHTML("beforeend", `
+<div style="height:100%;background:linear-gradient(170deg,#0a6a4f,#063d2e);color:#fff;display:flex;flex-direction:column;align-items:center;padding-top:96px;box-sizing:border-box">
+  <div style="width:132px;height:132px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 10px rgba(230,192,104,.35)"><img src="logo-transparent.png" style="height:112px"></div>
+  <div style="font:46px Lalezar;margin-top:18px">مركز أليف البيطري</div>
+  <div style="font-size:.85em;opacity:.85">تطعيمات القطيع</div>
+  <div style="direction:ltr;font:600 30px 'IBM Plex Sans Arabic';margin-top:10px;color:${GOLD}">${NUM}</div>
+  <div id="st" style="margin-top:14px;font-size:.8em;opacity:.8">جاري الاتصال…</div>
+  <div style="margin-top:auto;margin-bottom:70px;display:flex;gap:80px">
+    <div style="width:84px;height:84px;border-radius:50%;background:#e0453a;display:grid;place-items:center;transform:rotate(135deg)">${R.icon("phone", 42, "#fff", 2.4)}</div>
+    <div id="ans" style="width:84px;height:84px;border-radius:50%;background:#2ecc71;display:grid;place-items:center">${R.icon("phone", 42, "#fff", 2.4)}</div>
+  </div>
+</div>`);
+const st = ph.screen.querySelector("#st"), ans = ph.screen.querySelector("#ans");
+reel.on(t => {
+  const up = R.pop(t, T[12] + .2, .55), down = R.ease.in(R.clamp((t - (T[13] - .3)) / .35));
+  ph.root.style.transform = `translateY(${(1 - up) * 900 + down * 1100}px) rotate(${(1 - up) * 6}deg)`;
+  ph.root.style.visibility = t < T[12] + .1 || t > T[13] + .1 ? "hidden" : "visible";
+  const on = t >= W(12, 3);
+  const lbl = on ? "متصل · اسأل عن الجدول" : "جاري الاتصال…";
+  if (st.textContent !== lbl) st.textContent = lbl;
+  ans.style.transform = `scale(${on ? 1 : 1 + .12 * Math.abs(Math.sin(t * 8))})`;
+});
+reel.cue(T[12] + .5, "ring", "call");
+
+/* =========== دوك + كابشن + بطاقة النهاية =========== */
+R.dock(reel, [
+  ...[0, 1, 2, 3, 4].map(i => ({ icon: "shield", at: W(2 * i + 2, 1) + .15 })),
+  { icon: "store", at: T[11] + .1 }, { icon: "phone", at: T[12] + .3, color: "#4cc276" },
+], { from: T[1], accent: GOLD });
+const emph = {};
+for (const a of [1, 3, 5, 7, 9]) {
+  const base = SCRIPT.slice(0, a).reduce((s, l) => s + l.split(/\s+/).length, 0), n = SCRIPT[a].split(/\s+/).length;
+  for (let k = 1; k < n; k++) emph[base + k] = GOLD;
+}
+R.caption(reel, TM.words, { y: 400, size: 128, ends: TM.ends, hold: .5, emph });
+const card = R.endcard(reel, W(13, 2), { name: "مركز أليف", tagline: "رعاية متكاملة لحياة صحية", color: GREEN, logo: `<img src="logo-white.png" style="height:96px">` });
+card.insertAdjacentHTML("beforeend", `<div style="direction:ltr;font:600 34px 'IBM Plex Sans Arabic';color:${GOLD2}">${NUM}</div>`);
+</script>
+</body>
+</html>
